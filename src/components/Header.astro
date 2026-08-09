@@ -1,0 +1,277 @@
+---
+import Monogram from './Monogram.astro';
+import SocialIcons from './SocialIcons.astro';
+import { site } from '../data';
+
+const nav = [
+  { href: '/#about', label: 'About' },
+  { href: '/#research', label: 'Research' },
+  { href: '/#publications', label: 'Publications' },
+  { href: '/#talks', label: 'Talks' },
+  { href: '/#awards', label: 'Awards' },
+  { href: '/#news', label: 'News' },
+  { href: '/cv', label: 'CV' },
+];
+---
+
+<header class="site-header">
+  <div class="site-header__inner wrap">
+    <a href="/" class="brand" aria-label={`${site.name} — home`}>
+      <Monogram size={26} class="brand__mark" />
+      <span class="brand__name">{site.shortName}</span>
+    </a>
+
+    <nav class="nav" id="site-nav" aria-label="Sections">
+      <ul class="nav__list">
+        {
+          nav.map((item) => (
+            <li>
+              <a href={item.href} class="nav__link">
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="site-header__end">
+      {/* Wrapped rather than styled directly: a class passed into a child
+          component is not in this component's style scope, so the media query
+          below would never match it. */}
+      <div class="site-header__social">
+        <SocialIcons size="sm" />
+      </div>
+      <button
+        class="nav-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="site-nav"
+      >
+        <span class="nav-toggle__bars" aria-hidden="true"></span>
+        <span class="visually-hidden">Menu</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    height: var(--header-h);
+    background: color-mix(in srgb, var(--canvas) 88%, transparent);
+    backdrop-filter: blur(10px);
+    border-block-end: 1px solid var(--tan);
+  }
+
+  .site-header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-m);
+    height: 100%;
+  }
+
+  /* ---- brand ---- */
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2xs);
+    color: var(--ink);
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+
+  .brand__name {
+    font-family: var(--font-display);
+    font-variation-settings: var(--display-variation);
+    font-size: 1.0625rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+  }
+
+  .brand:hover .brand__name {
+    color: var(--accent-hover);
+  }
+
+  /* ---- nav ---- */
+  .nav__list {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.75rem, 0.2rem + 1.1vw, 1.5rem);
+    list-style: none;
+    padding: 0;
+  }
+
+  .nav__link {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--body);
+    text-decoration: none;
+    padding-block: 0.35rem;
+    border-block-end: 1.5px solid transparent;
+    white-space: nowrap;
+    transition:
+      color 0.15s var(--ease),
+      border-color 0.15s var(--ease);
+  }
+
+  .nav__link:hover,
+  .nav__link[aria-current='true'] {
+    color: var(--ink);
+    border-block-end-color: var(--accent);
+  }
+
+  .site-header__end {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2xs);
+    flex-shrink: 0;
+  }
+
+  /* ---- menu button (mobile only) ---- */
+  .nav-toggle {
+    display: none;
+    width: 2.375rem;
+    height: 2.375rem;
+    place-items: center;
+    border: 1px solid var(--tan-deep);
+    border-radius: var(--radius);
+    background: transparent;
+  }
+
+  .nav-toggle__bars,
+  .nav-toggle__bars::before,
+  .nav-toggle__bars::after {
+    display: block;
+    width: 17px;
+    height: 1.5px;
+    background: var(--ink);
+    transition: transform 0.2s var(--ease), opacity 0.2s var(--ease);
+  }
+
+  .nav-toggle__bars::before,
+  .nav-toggle__bars::after {
+    content: '';
+    position: absolute;
+  }
+
+  .nav-toggle__bars::before {
+    transform: translateY(-5.5px);
+  }
+  .nav-toggle__bars::after {
+    transform: translateY(5.5px);
+  }
+
+  .nav-toggle[aria-expanded='true'] .nav-toggle__bars {
+    background: transparent;
+  }
+  .nav-toggle[aria-expanded='true'] .nav-toggle__bars::before {
+    transform: rotate(45deg);
+  }
+  .nav-toggle[aria-expanded='true'] .nav-toggle__bars::after {
+    transform: rotate(-45deg);
+  }
+
+  /* ---- responsive ---- */
+  @media (max-width: 60rem) {
+    .site-header__social {
+      display: none;
+    }
+
+    .nav-toggle {
+      display: grid;
+    }
+
+    .nav {
+      position: fixed;
+      inset: var(--header-h) 0 auto 0;
+      background: var(--canvas);
+      border-block-end: 1px solid var(--tan);
+      box-shadow: var(--shadow-card);
+      padding: var(--space-s) var(--gutter) var(--space-l);
+      display: none;
+    }
+
+    .nav[data-open] {
+      display: block;
+    }
+
+    .nav__list {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+    }
+
+    .nav__link {
+      display: block;
+      padding-block: 0.8rem;
+      font-size: 1.0625rem;
+      border-block-end: 1px solid var(--tan);
+    }
+
+    .nav__link:hover {
+      border-block-end-color: var(--tan);
+      color: var(--accent-hover);
+    }
+  }
+</style>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('.nav-toggle');
+  const nav = document.querySelector<HTMLElement>('#site-nav');
+
+  if (toggle && nav) {
+    const setOpen = (open: boolean) => {
+      toggle.setAttribute('aria-expanded', String(open));
+      nav.toggleAttribute('data-open', open);
+    };
+
+    toggle.addEventListener('click', () => {
+      setOpen(toggle.getAttribute('aria-expanded') !== 'true');
+    });
+
+    // Close after choosing a destination, and on Escape.
+    nav.addEventListener('click', (e) => {
+      if ((e.target as HTMLElement).closest('a')) setOpen(false);
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+  }
+
+  // Highlight the section currently in view.
+  const links = [...document.querySelectorAll<HTMLAnchorElement>('.nav__link')];
+  const byId = new Map(
+    links
+      .map((a) => [a.getAttribute('href')?.split('#')[1] ?? '', a] as const)
+      .filter(([id]) => id)
+  );
+
+  if (byId.size) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          const link = byId.get(entry.target.id);
+          if (link && entry.isIntersecting) {
+            links.forEach((a) => a.removeAttribute('aria-current'));
+            link.setAttribute('aria-current', 'true');
+          }
+        }
+      },
+      { rootMargin: '-20% 0px -70% 0px' }
+    );
+
+    byId.forEach((_, id) => {
+      const section = document.getElementById(id);
+      if (section) observer.observe(section);
+    });
+  }
+</script>

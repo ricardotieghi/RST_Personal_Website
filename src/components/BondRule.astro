@@ -1,0 +1,30 @@
+---
+/**
+ * The site's signature divider: a hairline drawn in skeletal (bond-line)
+ * notation instead of a straight rule. Rendered as a CSS mask so it inherits
+ * a palette token rather than baking a colour into the SVG.
+ */
+interface Props {
+  width?: string;
+  class?: string;
+}
+const { width = '7.5rem', class: className } = Astro.props;
+---
+
+<div class:list={['bond', className]} style={`--bond-w:${width}`} aria-hidden="true"></div>
+
+<style>
+  .bond {
+    width: var(--bond-w);
+    height: 12px;
+    background-color: var(--tan-deep);
+    -webkit-mask-image: var(--bond-svg);
+    mask-image: var(--bond-svg);
+    -webkit-mask-repeat: repeat-x;
+    mask-repeat: repeat-x;
+    -webkit-mask-size: 24px 12px;
+    mask-size: 24px 12px;
+
+    --bond-svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='12' viewBox='0 0 24 12'%3E%3Cpath d='M0 9 L6 3 L12 9 L18 3 L24 9' fill='none' stroke='%23000' stroke-width='1.4' stroke-linecap='square'/%3E%3C/svg%3E");
+  }
+</style>

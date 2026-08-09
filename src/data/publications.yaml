@@ -1,0 +1,174 @@
+# ---------------------------------------------------------------------------
+# Publications.
+#
+# status:   published | under-review | in-preparation | preprint
+#           Only `published` counts toward the "Peer-reviewed" stat.
+# topics:   policy | ml | ai | tools | reviews    (drives the filter pills)
+# featured: true      shows the entry in the Featured Research grid (pick 4)
+# authors:  put `**` around your own name — it renders bold automatically
+# image:    filename in src/assets/papers/. Leave null for a designed placeholder.
+# ---------------------------------------------------------------------------
+
+- id: nejm-ai-nams
+  title: >-
+    The Promise of Animal Testing Alternatives at the U.S. Food and Drug
+    Administration and the National Institutes of Health
+  authors: '**R. S. Tieghi**, T. B. Høeg, M. Makary, N. Kleinstreuer'
+  venue: NEJM AI
+  year: 2025
+  status: published
+  url: https://ai.nejm.org/doi/full/10.1056/Aipc2500587
+  citations: 11
+  topics: [policy]
+  featured: true
+  image: nejm-ai-nams.jpg
+  note: >-
+    Written with the FDA Commissioner, the FDA CDER Director, and the NIH
+    Deputy Director.
+
+- id: husspred-toxics
+  title: >-
+    A Novel Machine Learning Model and a Web Portal for Predicting the Human
+    Skin Sensitization Effects of Chemical Agents
+  authors: '**R. S. Tieghi**, J. T. Moreira-Filho, H. Martin, J. Wellnitz, M. Canamary Otoch, M. Rath, A. Tropsha, E. Muratov, N. Kleinstreuer'
+  venue: Toxics (MDPI)
+  year: 2024
+  status: published
+  url: https://doi.org/10.3390/toxics12110803
+  citations: 10
+  topics: [ml, tools]
+  featured: true
+  image: husspred-toxics.webp
+  badges:
+    - Editor's Choice
+    - SOT Paper of the Year
+    - NIEHS Paper of the Month
+
+- id: detox-ehp
+  title: >-
+    DeTox: an In Silico Alternative to Animal Testing for Predicting
+    Developmental Toxicity Potential
+  authors: '**R. S. Tieghi**, et al.'
+  venue: Environmental Health Perspectives
+  year: 2026
+  status: published
+  url: https://doi.org/10.1021/EHP.6c01149
+  citations: 4
+  topics: [ml, tools]
+  featured: true
+  image: detox-ehp.png
+
+- id: stoptox-validation
+  title: >-
+    External Validation of STopTox as an in Silico Alternative to Animal
+    Toxicity Testing
+  authors: '**R. S. Tieghi**, et al.'
+  venue: Environmental Health Perspectives
+  year: 2025
+  status: published
+  url: https://pubmed.ncbi.nlm.nih.gov/40393008/
+  citations: 3
+  impactFactor: '10.1'
+  topics: [ml, tools]
+  featured: true
+  image: stoptox-validation.png
+
+- id: knime-llm-extraction
+  title: >-
+    Automating Data Extraction from Scientific Literature and General PDF Files
+    Using Large Language Models and KNIME: an Application in Toxicology
+  authors: 'J. T. Moreira-Filho, **R. S. Tieghi**, et al.'
+  venue: WIREs Computational Molecular Science
+  year: 2025
+  status: published
+  url: https://doi.org/10.1002/wcms.70047
+  citations: 9
+  topics: [ai, tools]
+  image: knime-llm-extraction.jpg
+
+- id: medchem-deep-learning
+  title: >-
+    The medicinal chemist's map to deep learning: Concepts, applications, and
+    case studies
+  authors: 'M. Mahale, **R. S. Tieghi**, et al.'
+  venue: Elsevier Reference Module in Chemistry, Molecular Sciences and Chemical Engineering
+  year: 2025
+  status: published
+  url: https://doi.org/10.1016/B978-0-443-29808-0.00066-2
+  coFirst: true
+  topics: [reviews, ai]
+  image: medchem-deep-learning.png
+
+- id: pfas-liver
+  title: Synergistic Toxicity in Alcohol-Associated Liver Disease and PFAS Exposure
+  authors: 'A. Stem, **R. S. Tieghi**, N. Kleinstreuer, V. Vasiliou'
+  venue: Toxicological Sciences
+  year: 2025
+  status: published
+  url: https://doi.org/10.1093/toxsci/kfaf110
+  citations: 7
+  impactFactor: '4.1'
+  topics: [ml]
+  image: pfas-liver.jpg
+
+- id: democratizing-ai-tox
+  title: >-
+    Democratizing Artificial Intelligence in Toxicology: Real-World Applications
+    and Automated Computational Workflows
+  authors: 'K. Mansouri, J. T. Moreira-Filho, **R. S. Tieghi**, N. Kleinstreuer'
+  venue: ACS Chemical Research in Toxicology
+  year: 2025
+  status: published
+  url: https://doi.org/10.1021/acs.chemrestox.6c00093
+  topics: [ai, reviews]
+  image: democratizing-ai-tox.png
+
+- id: pesticides-mixtures-review
+  title: >-
+    Importance and Challenges of Computational Modeling of Pesticides and
+    Chemical Mixtures in Environmental Health: A Review
+  authors: 'C. Melo-Filho, **R. S. Tieghi**'
+  venue: ACS Chemical Reviews
+  status: under-review
+  coFirst: true
+  topics: [reviews]
+  image: null
+
+- id: ai-agents-drug-discovery
+  title: AI Agents as Collaborators in Drug Discovery and Development
+  authors: 'S. Seal, D. L. Huynh, **R. S. Tieghi**, et al.'
+  venue: Nature
+  status: in-preparation
+  topics: [ai]
+  image: null
+
+- id: camera-resource
+  title: >-
+    CAMERA: A Centralized Public Resource for Validated Alternative Methods to
+    Support Regulatory Decision-Making
+  authors: '**R. S. Tieghi**, et al.'
+  status: in-preparation
+  topics: [tools, policy]
+  image: null
+
+- id: aop-knowledge-graphs
+  title: >-
+    Elucidation of Adverse Outcome Pathways for Compound-induced Developmental
+    Neurotoxicity using Knowledge Graphs
+  authors: '**R. S. Tieghi**, et al.'
+  status: in-preparation
+  topics: [ml]
+  image: null
+
+- id: breaking-the-phalanx
+  title: >-
+    Breaking the Phalanx: Overcoming Bacterial Drug Resistance with Quorum
+    Sensing Inhibitors that Enhance Therapeutic Activity of Antibiotics
+  authors: 'J. M. Beasley, D. Dorjsuren, […] **R. S. Tieghi**, E. Muratov'
+  venue: bioRxiv
+  year: 2025
+  status: preprint
+  url: https://doi.org/10.1101/2025.01.17.633658
+  citations: 4
+  topics: [ml]
+  image: breaking-the-phalanx.jpg

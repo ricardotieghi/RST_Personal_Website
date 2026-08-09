@@ -1,0 +1,196 @@
+---
+import { Image } from 'astro:assets';
+import Section from './Section.astro';
+import chancellor from '../assets/photos/chancellor-award.jpg';
+import sotAward from '../assets/photos/sot-2025-award.jpg';
+import { awardGroups, awards } from '../data';
+---
+
+<Section
+  id="awards"
+  label="Awards"
+  title="What the field has recognized."
+  count={awards.length}
+  lede="Prize challenges and research honors first, then presentation and institutional awards. Amounts are as awarded."
+>
+  <div class="awards">
+    {
+      awardGroups.map((group) => (
+        <div class="awardgroup">
+          <h3 class="awardgroup__label">
+            {group.label}
+            <span class="awardgroup__count">{group.items.length}</span>
+          </h3>
+
+          <ul class="awardgroup__list">
+            {group.items.map((award) => (
+              <li class="award">
+                <div class="award__head">
+                  <span class="award__result">{award.result}</span>
+                  {award.value && <span class="award__value">{award.value}</span>}
+                  {award.year && <span class="award__year">{award.year}</span>}
+                </div>
+
+                <p class="award__title">
+                  {award.url ? (
+                    <a href={award.url} target="_blank" rel="noopener noreferrer">
+                      {award.title}
+                      <span aria-hidden="true"> ↗</span>
+                    </a>
+                  ) : (
+                    award.title
+                  )}
+                </p>
+
+                {award.note && <p class="award__note">{award.note}</p>}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))
+    }
+  </div>
+
+  <div class="awards__photos">
+    <figure>
+      <Image
+        src={sotAward}
+        alt="Receiving the SOT Undergraduate Research Award at the SOT 64th Annual Meeting in Orlando"
+        widths={[320, 520]}
+        sizes="(max-width: 45rem) 90vw, 22rem"
+        loading="lazy"
+      />
+      <figcaption>SOT Undergraduate Research Award · Orlando, March 2025</figcaption>
+    </figure>
+    <figure>
+      <Image
+        src={chancellor}
+        alt="Receiving the UNC Chancellor's Walter S. Spearman Award"
+        widths={[320, 520]}
+        sizes="(max-width: 45rem) 90vw, 22rem"
+        loading="lazy"
+      />
+      <figcaption>UNC Chancellor's Awards · Chapel Hill, 2025</figcaption>
+    </figure>
+  </div>
+</Section>
+
+<style>
+  .awards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
+    gap: var(--space-xl);
+  }
+
+  .awardgroup__label {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2xs);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding-block-end: var(--space-2xs);
+    border-block-end: 1px solid var(--tan);
+  }
+
+  .awardgroup__count {
+    display: inline-grid;
+    place-items: center;
+    min-width: 1.4em;
+    padding: 0.1em 0.35em;
+    border-radius: 999px;
+    background: var(--tan);
+    color: #5b4a3d;
+    font-size: 0.68rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .awardgroup__list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .award {
+    padding-block: var(--space-s);
+    border-block-end: 1px solid var(--tan);
+  }
+
+  .award__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.5em;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+  }
+
+  .award__result {
+    color: var(--accent);
+    font-weight: 500;
+    text-transform: uppercase;
+  }
+
+  .award__value {
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .award__year {
+    color: var(--muted);
+    margin-inline-start: auto;
+  }
+
+  .award__title {
+    margin-block-start: 0.25rem;
+    font-size: var(--step-0);
+    color: var(--ink);
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  .award__title a {
+    color: inherit;
+    text-decoration: none;
+    border-block-end: 1px solid var(--tan-deep);
+  }
+
+  .award__title a:hover {
+    color: var(--accent-hover);
+    border-block-end-color: var(--accent);
+  }
+
+  .award__note {
+    margin-block-start: 0.3rem;
+    font-size: 0.85rem;
+    color: var(--muted);
+    max-width: 52ch;
+  }
+
+  .awards__photos {
+    margin-block-start: var(--space-2xl);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+    gap: var(--space-m);
+  }
+
+  .awards__photos img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    border-radius: var(--radius);
+    border: 1px solid var(--tan);
+  }
+
+  .awards__photos figcaption {
+    margin-block-start: var(--space-2xs);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+  }
+</style>

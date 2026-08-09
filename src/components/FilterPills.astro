@@ -1,0 +1,113 @@
+---
+interface Option {
+  value: string;
+  label: string;
+  count?: number;
+}
+
+interface Props {
+  group: string;
+  legend: string;
+  options: Option[];
+  /** Which dimension these pills control, when a group has several rows. */
+  dimension?: string;
+  mode?: 'and' | 'or';
+  /** Renders the row without the group wrapper, for a second row of pills. */
+  standalone?: boolean;
+}
+
+const { group, legend, options, dimension, mode, standalone = false } = Astro.props;
+
+const Wrapper = standalone ? 'div' : 'div';
+---
+
+<Wrapper
+  class="pills"
+  role="group"
+  aria-label={legend}
+  data-filter-group={standalone ? undefined : group}
+  data-filter-mode={standalone ? undefined : mode}
+>
+  <span class="pills__legend">{legend}</span>
+  <div class="pills__row">
+    {
+      options.map((option, i) => (
+        <button
+          type="button"
+          class="pill"
+          data-filter-value={option.value}
+          data-filter-dim={dimension}
+          aria-pressed={i === 0 ? 'true' : 'false'}
+        >
+          {option.label}
+          {option.count !== undefined && <span class="pill__count">{option.count}</span>}
+        </button>
+      ))
+    }
+  </div>
+</Wrapper>
+
+<style>
+  .pills {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-2xs) var(--space-s);
+  }
+
+  .pills__legend {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    flex-shrink: 0;
+  }
+
+  .pills__row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.375rem;
+  }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    padding: 0.35em 0.85em;
+    border: 1px solid var(--tan-deep);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--body);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    line-height: 1.4;
+    transition:
+      background-color 0.15s var(--ease),
+      border-color 0.15s var(--ease),
+      color 0.15s var(--ease);
+  }
+
+  .pill:hover {
+    border-color: var(--accent);
+    color: var(--accent-hover);
+  }
+
+  .pill[aria-pressed='true'] {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: #fff;
+  }
+
+  .pill__count {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-variant-numeric: tabular-nums;
+    color: var(--muted);
+  }
+
+  .pill[aria-pressed='true'] .pill__count {
+    color: var(--tan);
+  }
+</style>

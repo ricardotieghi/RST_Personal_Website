@@ -1,0 +1,14 @@
+# ---------------------------------------------------------------------------
+# Google Scholar does not offer an API, so these three numbers are entered by
+# hand. Check https://scholar.google.com/citations?user=iEROevEAAAAJ every few
+# months and update `updated` when you do — the date renders under the stats.
+# ---------------------------------------------------------------------------
+
+citations: 55
+hIndex: 4
+i10Index: 2
+updated: August 2026
+scholarUrl: https://scholar.google.com/citations?user=iEROevEAAAAJ&hl=en
+
+# Every other number on the page (publications, awards, talks, posters) is
+# counted from the YAML files at build time — do not hard-code them here.

@@ -1,0 +1,286 @@
+---
+import { Image } from 'astro:assets';
+import headshot from '../assets/photos/headshot.jpg';
+import SocialIcons from './SocialIcons.astro';
+import { site } from '../data';
+---
+
+<section class="hero" aria-labelledby="hero-name">
+  <div class="hero__field" aria-hidden="true"></div>
+
+  <div class="wrap hero__inner">
+    <div class="hero__text">
+      <p class="eyebrow hero__eyebrow">
+        <span class="eyebrow__mark" aria-hidden="true">§</span>
+        <span>{site.location}</span>
+        <span aria-hidden="true">·</span>
+        <span>NIH Office of the Director</span>
+      </p>
+
+      <h1 id="hero-name" class="hero__name">{site.name}</h1>
+
+      <p class="hero__thesis">
+        <span class="hero__thesis-lead">I work on</span>
+        <span class="rotator" data-rotator>
+          {
+            /* Only the visible phrase is exposed to assistive tech, so the
+               sentence never reads as three run-together phrases. */
+            site.rotating.map((phrase, i) => (
+              <span
+                class="rotator__item"
+                data-active={i === 0 ? '' : undefined}
+                aria-hidden={i === 0 ? undefined : 'true'}
+              >
+                {phrase}
+              </span>
+            ))
+          }
+        </span>
+      </p>
+
+      <p class="hero__role">
+        <strong>{site.role}</strong> — {site.roleDetail}
+      </p>
+
+      <div class="hero__actions">
+        <a class="btn btn--primary" href="#publications">
+          Read publications
+          <span aria-hidden="true">→</span>
+        </a>
+        <a class="btn btn--secondary" href="/cv">Curriculum vitae</a>
+      </div>
+
+      <SocialIcons class="hero__social" />
+    </div>
+
+    <figure class="hero__portrait">
+      <div class="frame">
+        <Image
+          src={headshot}
+          alt={`Portrait of ${site.name}`}
+          widths={[320, 480, 640]}
+          sizes="(max-width: 55rem) 60vw, 24rem"
+          loading="eager"
+          fetchpriority="high"
+          class="frame__img"
+        />
+        <span class="frame__corner frame__corner--tl" aria-hidden="true"></span>
+        <span class="frame__corner frame__corner--tr" aria-hidden="true"></span>
+        <span class="frame__corner frame__corner--bl" aria-hidden="true"></span>
+        <span class="frame__corner frame__corner--br" aria-hidden="true"></span>
+      </div>
+      <figcaption class="hero__caption">
+        {site.pronouns} · BS Biology, UNC-Chapel Hill 2025
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    padding-block: clamp(2.5rem, 1.5rem + 4vw, 5rem) clamp(2.5rem, 1.8rem + 3vw, 4rem);
+    overflow: hidden;
+  }
+
+  /* Soft wash plus a fine lattice — texture, not pattern. */
+  .hero__field {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background-image:
+      radial-gradient(
+        ellipse 60% 70% at 82% 18%,
+        color-mix(in srgb, var(--blue-soft) 22%, transparent),
+        transparent 70%
+      ),
+      radial-gradient(circle, var(--tan-deep) 1px, transparent 1.2px);
+    background-size:
+      100% 100%,
+      22px 22px;
+    -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent);
+    mask-image: linear-gradient(to bottom, #000 55%, transparent);
+    opacity: 0.55;
+  }
+
+  .hero__inner {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 22rem);
+    align-items: center;
+    gap: clamp(2rem, 1rem + 4vw, 4.5rem);
+  }
+
+  /* ---- text column ---- */
+  .hero__eyebrow {
+    margin-block-end: var(--space-m);
+  }
+
+  .hero__name {
+    font-size: clamp(2.75rem, 1.9rem + 4.2vw, 5rem);
+    font-variation-settings: 'SOFT' 0, 'WONK' 1, 'opsz' 144;
+    letter-spacing: -0.028em;
+    line-height: 0.98;
+  }
+
+  .hero__thesis {
+    margin-block-start: var(--space-m);
+    font-size: var(--step-2);
+    line-height: 1.35;
+    color: var(--body);
+    max-width: 26ch;
+  }
+
+  .hero__thesis-lead {
+    color: var(--muted);
+  }
+
+  /* The rotator stacks its phrases and cross-fades between them. Height is
+     driven by the tallest phrase so nothing below it shifts. */
+  .rotator {
+    display: grid;
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  .rotator__item {
+    grid-area: 1 / 1;
+    opacity: 0;
+    transform: translateY(0.35em);
+    transition:
+      opacity 0.5s var(--ease),
+      transform 0.5s var(--ease);
+  }
+
+  .rotator__item[data-active] {
+    opacity: 1;
+    transform: none;
+  }
+
+  .hero__role {
+    margin-block-start: var(--space-m);
+    max-width: 46ch;
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2xs);
+    margin-block-start: var(--space-l);
+  }
+
+  .hero__social {
+    margin-block-start: var(--space-m);
+  }
+
+  /* ---- portrait with corner brackets ---- */
+  .hero__portrait {
+    justify-self: end;
+    width: 100%;
+    max-width: 22rem;
+  }
+
+  .frame {
+    position: relative;
+    padding: 10px;
+  }
+
+  .frame__img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    object-position: center 22%;
+    border-radius: 2px;
+  }
+
+  .frame__corner {
+    position: absolute;
+    width: 26px;
+    height: 26px;
+    border: 1.5px solid var(--accent);
+  }
+
+  .frame__corner--tl {
+    top: 0;
+    left: 0;
+    border-right: 0;
+    border-bottom: 0;
+  }
+  .frame__corner--tr {
+    top: 0;
+    right: 0;
+    border-left: 0;
+    border-bottom: 0;
+  }
+  .frame__corner--bl {
+    bottom: 0;
+    left: 0;
+    border-right: 0;
+    border-top: 0;
+  }
+  .frame__corner--br {
+    bottom: 0;
+    right: 0;
+    border-left: 0;
+    border-top: 0;
+  }
+
+  .hero__caption {
+    margin-block-start: var(--space-s);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-align: right;
+  }
+
+  /* ---- responsive ---- */
+  @media (max-width: 55rem) {
+    .hero__inner {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-xl);
+    }
+
+    .hero__portrait {
+      order: -1;
+      justify-self: start;
+      max-width: 15rem;
+    }
+
+    .hero__caption {
+      text-align: left;
+    }
+
+    .hero__thesis {
+      max-width: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .rotator__item {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  const rotator = document.querySelector<HTMLElement>('[data-rotator]');
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  if (rotator && !reduced.matches) {
+    const items = [...rotator.querySelectorAll<HTMLElement>('.rotator__item')];
+    if (items.length > 1) {
+      let index = 0;
+      setInterval(() => {
+        items[index].removeAttribute('data-active');
+        items[index].setAttribute('aria-hidden', 'true');
+        index = (index + 1) % items.length;
+        items[index].setAttribute('data-active', '');
+        items[index].removeAttribute('aria-hidden');
+      }, 3800);
+    }
+  }
+</script>

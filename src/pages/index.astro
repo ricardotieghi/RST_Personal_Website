@@ -1,0 +1,30 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import StatRow from '../components/StatRow.astro';
+import Ticker from '../components/Ticker.astro';
+import About from '../components/About.astro';
+import FeaturedResearch from '../components/FeaturedResearch.astro';
+import PublicationList from '../components/PublicationList.astro';
+import TalksTimeline from '../components/TalksTimeline.astro';
+import AwardsGrid from '../components/AwardsGrid.astro';
+import NewsTimeline from '../components/NewsTimeline.astro';
+import ContactForm from '../components/ContactForm.astro';
+---
+
+<Base>
+  <Hero />
+  <StatRow />
+  <Ticker />
+  <About />
+  <FeaturedResearch />
+  <PublicationList />
+  <TalksTimeline />
+  <AwardsGrid />
+  <NewsTimeline />
+  <ContactForm />
+</Base>
+
+<script>
+  import '../scripts/filters';
+</script>

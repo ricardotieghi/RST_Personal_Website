@@ -1,0 +1,134 @@
+---
+import Monogram from './Monogram.astro';
+import SocialIcons from './SocialIcons.astro';
+import { site, stats } from '../data';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="wrap site-footer__inner">
+    <div class="site-footer__brand">
+      <a href="/" class="site-footer__mark" aria-label={`${site.name} — home`}>
+        <Monogram size={30} />
+      </a>
+      <p class="site-footer__name">{site.name}</p>
+      <p class="site-footer__role">
+        {site.role} — {site.roleDetail}
+      </p>
+      <p class="site-footer__where">{site.location}</p>
+    </div>
+
+    <div class="site-footer__links">
+      <SocialIcons size="sm" />
+      <a class="site-footer__cv" href="/cv">
+        Curriculum vitae
+        <span aria-hidden="true">→</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="wrap site-footer__legal">
+    <p class="site-footer__disclaimer">{site.disclaimer}</p>
+    <p class="site-footer__meta">
+      <span>© {year} {site.name}</span>
+      <span aria-hidden="true">·</span>
+      <span>Scholar metrics updated {stats.updated}</span>
+    </p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-block-start: 1px solid var(--tan);
+    background: var(--canvas-deep);
+    padding-block: var(--space-2xl) var(--space-xl);
+  }
+
+  .site-footer__inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-l);
+  }
+
+  .site-footer__mark {
+    display: inline-block;
+    color: var(--ink);
+    margin-block-end: var(--space-xs);
+  }
+
+  .site-footer__name {
+    font-family: var(--font-display);
+    font-variation-settings: var(--display-variation);
+    font-size: var(--step-1);
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+
+  .site-footer__role {
+    color: var(--body);
+    max-width: 34ch;
+  }
+
+  .site-footer__where {
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-block-start: var(--space-2xs);
+  }
+
+  .site-footer__links {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-s);
+  }
+
+  .site-footer__cv {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    font-size: var(--step--1);
+    font-weight: 500;
+    text-decoration: none;
+    border-block-end: 1px solid var(--tan-deep);
+    padding-block-end: 2px;
+  }
+
+  .site-footer__cv:hover {
+    border-block-end-color: var(--accent);
+  }
+
+  .site-footer__legal {
+    margin-block-start: var(--space-2xl);
+    padding-block-start: var(--space-m);
+    border-block-start: 1px solid var(--tan);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-s);
+  }
+
+  .site-footer__disclaimer {
+    font-size: var(--step--1);
+    color: var(--muted);
+    max-width: 62ch;
+  }
+
+  .site-footer__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5em;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+</style>

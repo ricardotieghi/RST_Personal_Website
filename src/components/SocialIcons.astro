@@ -1,0 +1,104 @@
+---
+/**
+ * Outlined square icon buttons — the treatment from wanghley.com, recoloured
+ * for the light palette. Any link left as `null` in site.yaml is skipped, so
+ * the row never shows a dead icon.
+ */
+import { site } from '../data';
+
+interface Props {
+  size?: 'sm' | 'md';
+  class?: string;
+}
+const { size = 'md', class: className } = Astro.props;
+
+const all = [
+  { key: 'linkedin', label: 'LinkedIn', url: site.links.linkedin },
+  { key: 'scholar', label: 'Google Scholar', url: site.links.scholar },
+  { key: 'orcid', label: 'ORCID', url: site.links.orcid },
+  { key: 'instagram', label: 'Instagram', url: site.links.instagram },
+] as const;
+
+const links = all.filter((l): l is typeof l & { url: string } => Boolean(l.url));
+---
+
+<ul class:list={['social', `social--${size}`, className]}>
+  {
+    links.map((link) => (
+      <li>
+        <a
+          href={link.url}
+          class="social__btn"
+          target="_blank"
+          rel="me noopener noreferrer"
+          aria-label={link.label}
+          title={link.label}
+        >
+          {link.key === 'linkedin' && (
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.71h.05a4.17 4.17 0 0 1 3.75-2.06c4 0 4.75 2.64 4.75 6.07V21h-4v-5.4c0-1.29-.02-2.95-1.8-2.95-1.8 0-2.08 1.4-2.08 2.85V21h-4V9Z" />
+            </svg>
+          )}
+          {link.key === 'scholar' && (
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 2 1 8.5l4 2.37V17c0 1.66 3.13 3 7 3s7-1.34 7-3v-6.13l2-1.18V16h2V8.5L12 2Zm0 2.33 7.3 4.32L12 12.97 4.7 8.65 12 4.33ZM17 16.4c0 .77-2.24 1.98-5 1.98s-5-1.21-5-1.98v-4.35l5 2.96 5-2.96v4.35Z" />
+            </svg>
+          )}
+          {link.key === 'orcid' && (
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20ZM8.2 6.4a.95.95 0 1 1 0 1.9.95.95 0 0 1 0-1.9Zm-.7 3.1h1.4v8.1H7.5V9.5Zm3.2 0h3.15c3 0 4.32 2.14 4.32 4.05 0 2.08-1.63 4.05-4.3 4.05h-3.17V9.5Zm1.4 1.27v5.51h1.66c2.1 0 2.98-1.4 2.98-2.76 0-1.26-.8-2.75-2.95-2.75h-1.69Z" />
+            </svg>
+          )}
+          {link.key === 'instagram' && (
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              <rect x="3" y="3" width="18" height="18" rx="5" />
+              <circle cx="12" cy="12" r="3.8" />
+              <circle cx="17.3" cy="6.7" r="1.1" fill="currentColor" stroke="none" />
+            </svg>
+          )}
+        </a>
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  .social {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2xs);
+    list-style: none;
+    padding: 0;
+  }
+
+  .social__btn {
+    --btn-size: 2.375rem;
+    display: grid;
+    place-items: center;
+    width: var(--btn-size);
+    height: var(--btn-size);
+    border: 1px solid var(--tan-deep);
+    border-radius: var(--radius);
+    color: var(--ink);
+    background: transparent;
+    transition:
+      border-color 0.15s var(--ease),
+      background-color 0.15s var(--ease),
+      color 0.15s var(--ease);
+  }
+
+  .social--sm .social__btn {
+    --btn-size: 2.125rem;
+  }
+
+  .social__btn svg {
+    width: 55%;
+    height: 55%;
+  }
+
+  .social__btn:hover {
+    border-color: var(--accent);
+    background: var(--blue-wash);
+    color: var(--accent-hover);
+  }
+</style>

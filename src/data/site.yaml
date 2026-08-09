@@ -1,0 +1,159 @@
+# ---------------------------------------------------------------------------
+# Site-wide settings. Everything here is safe to edit by hand.
+# ---------------------------------------------------------------------------
+
+name: Ricardo Scheufen Tieghi
+shortName: Ricardo S. Tieghi
+initials: RST
+pronouns: he/him
+
+# The role line under the name in the hero.
+role: Program Analyst, Guidehouse
+roleDetail: supporting the Office of the NIH Director
+location: Durham, North Carolina
+
+# Shown in the browser tab and search results.
+tagline: Computational toxicology, machine learning, and AI policy for biomedical research.
+
+# The rotating phrase in the hero. The first item renders statically for
+# anyone who has reduced motion turned on, so put the strongest one first.
+rotating:
+  - replacing animal testing with machine learning
+  - AI policy for federal biomedical research
+  - computational toxicology regulators can act on
+
+# ---------------------------------------------------------------------------
+# About section
+# ---------------------------------------------------------------------------
+about:
+  - >-
+    I work at the intersection of computational toxicology, machine learning, and
+    federal science policy. My research builds models that predict chemical
+    toxicity from structure, so that questions once answered with animal tests can
+    be answered computationally instead.
+  - >-
+    At NIH I support the Office of the Director on AI strategy: co-leading the $5M
+    AI and Biomedical Foundation Model Challenge, running portfolio analysis for
+    the $1.2B Bio Genesis Mission, and co-authoring the NIH AI Strategic Plan for
+    2026 to 2029. Before that I spent two years at NIEHS in the NICEATM group and
+    two years in the UNC Molecular Modeling Lab, where our work drew more than
+    $1.8M in project funding.
+  - >-
+    I graduated from UNC-Chapel Hill in 2025 with a BS in Biology and minors in
+    Chemistry and Medical Anthropology, and I review for ACS Chemical Research in
+    Toxicology and JCIM.
+
+education:
+  - degree: BS Biology — minors in Chemistry and Medical Anthropology
+    institution: University of North Carolina at Chapel Hill
+    period: Aug 2021 – May 2025
+    detail: GPA 3.9 · Highest Distinction · Dean's List · Carolina Research Scholar
+
+# ---------------------------------------------------------------------------
+# Experience (used on the /cv page)
+# ---------------------------------------------------------------------------
+experience:
+  - org: National Institutes of Health — Office of the NIH Director
+    orgDetail: via Guidehouse · Bethesda, MD
+    title: Program Analyst
+    period: Jun 2025 – Present
+    points:
+      - Authored a publication with the FDA Commissioner, the FDA CDER Director, and the NIH Deputy Director on alternatives to animal testing in preclinical research, in NEJM AI.
+      - Co-led development of the $5M AI and Biomedical Foundation Model Challenge.
+      - Led portfolio analysis for the Bio Genesis Mission, a $1.2B initiative from NIH's Chief AI Office.
+      - Co-authored and supported development of the NIH AI Strategic Plan (2026–2029).
+      - Built a multi-agent dashboard for the multimodal-AI award program using LLMs and MCP servers, cutting award-management time by roughly 50% in six months.
+      - Deployed a portfolio analysis agent now serving six NIH Institutes and Centers, used for 15+ analyses for NIH leadership.
+      - Delivered three portfolio analyses under compressed deadlines for congressional House Appropriations, analyzing 1,900+ grants with custom agentic AI pipelines.
+
+  - org: Human Chemical Company
+    orgDetail: Chapel Hill, NC
+    title: AI Solutions Strategy Consultant
+    period: Dec 2025 – Jul 2026
+    points:
+      - Developed tools to assess pharmacokinetic properties of chemicals for an agentic AI startup.
+
+  - org: National Institute of Environmental Health Sciences
+    orgDetail: Division of Translational Toxicology, NICEATM · Morrisville, NC
+    title: Intern
+    period: Jun 2024 – May 2025
+    supervisor: Dr. Nicole Kleinstreuer, Director of NICEATM
+    points:
+      - Presented computational modeling work on skin sensitization, developmental toxicity, and acute and chronic toxicity at seven conferences; received 14 research awards and a best paper of the year award at the SOT Annual Meeting.
+      - Published 10 projects aimed at refining and replacing animal use in toxicity testing with machine learning.
+      - Collaborated with industry partners to model complex mixtures and review best practices for deep learning in medicinal chemistry.
+
+  - org: UNC Molecular Modeling Lab
+    orgDetail: Chapel Hill, NC
+    title: Machine Learning Intern
+    period: May 2023 – May 2025
+    supervisor: Dr. Alexander Tropsha
+    points:
+      - Led AI and machine-learning implementation for five toxicology projects on developmental toxicity, skin sensitization, and liver toxicity.
+      - Contributed to over $1.8M in awarded funding for species-specific toxicity concordance analysis and mechanism-based modeling.
+      - Applied QSAR best practices across eight endpoints — data curation, performance benchmarking, context of use, model validation, and 2D similarity.
+
+service:
+  - org: ACS Chemical Research in Toxicology and JCIM
+    title: Peer Reviewer
+    period: Aug 2022 – 2024
+    detail: Reviewed 10+ publications on computational toxicology and machine learning.
+
+skills:
+  - group: Domains
+    items: [Computational Toxicology, Machine Learning, Large Language Models, Agentic AI, Data Modeling]
+  - group: Tools
+    items: [Python, PyTorch, RDKit, Scikit-Learn, Optuna, Plotly, Matplotlib, HTML, CSS, Microsoft Azure]
+
+# ---------------------------------------------------------------------------
+# The credential ticker under the hero.
+# ---------------------------------------------------------------------------
+ticker:
+  - NEJM AI
+  - NIH Replication Prize
+  - Complement-ARIE Challenge
+  - SOT Paper of the Year
+  - NIEHS Paper of the Month ×2
+  - Chancellor's Award
+  - $1.8M project funding
+  - UNC Chapel Hill
+
+# ---------------------------------------------------------------------------
+# Links. Set `url` to null to hide an icon until you have the address.
+# ---------------------------------------------------------------------------
+links:
+  linkedin: https://www.linkedin.com/in/ricardotieghi/
+  scholar: https://scholar.google.com/citations?user=iEROevEAAAAJ&hl=en
+  instagram: https://www.instagram.com/ricardotieghi/
+  orcid: https://orcid.org/0009-0004-0763-6412
+
+cv:
+  # The published PDF. Replace the file at public/cv/ with the same name to
+  # update it; the /cv page checks the file exists at build time and hides the
+  # download button and viewer if it does not. The Word original it is exported
+  # from is gitignored — keep it out of the repo.
+  file: /cv/Ricardo-Scheufen-Tieghi-CV.pdf
+  updated: August 2026
+
+# ---------------------------------------------------------------------------
+# Contact form.
+#
+# Until `endpoint` is set the form is replaced by a LinkedIn call to action, so
+# the section never shows a form that silently drops messages.
+#
+# To turn it on: create a free form at https://formspree.io (or web3forms.com),
+# then paste the endpoint URL here. It is a public submission URL, not a secret.
+# ---------------------------------------------------------------------------
+contact:
+  endpoint: null
+  heading: Get in touch
+  blurb: >-
+    I'm always glad to talk about computational toxicology, new approach
+    methodologies, or AI in federal biomedical research.
+
+# ---------------------------------------------------------------------------
+# Required on a site that describes federal contract work.
+# ---------------------------------------------------------------------------
+disclaimer: >-
+  Views expressed on this site are my own and do not represent the National
+  Institutes of Health, the Department of Health and Human Services, or Guidehouse.

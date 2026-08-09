@@ -1,0 +1,144 @@
+---
+import { Image } from 'astro:assets';
+
+/**
+ * Publication thumbnail. Renders the real figure when `src/assets/papers/`
+ * has one; otherwise draws a designed placeholder in the palette so the card
+ * grid reads as finished until Ricardo drops the graphical abstracts in.
+ */
+interface Props {
+  venue?: string;
+  year?: number;
+  image?: string | null;
+  alt?: string;
+}
+
+const { venue, year, image, alt } = Astro.props;
+
+const papers = import.meta.glob<{ default: ImageMetadata }>(
+  '../assets/papers/*.{jpg,jpeg,png,webp}',
+  { eager: true }
+);
+const match = image ? papers[`../assets/papers/${image}`] : undefined;
+---
+
+{
+  match ? (
+    <Image
+      src={match.default}
+      alt={alt ?? `Figure from ${venue ?? 'the paper'}`}
+      widths={[280, 420, 560]}
+      sizes="(max-width: 48rem) 90vw, 18rem"
+      loading="lazy"
+      class="thumb__img"
+    />
+  ) : (
+    <div class="thumb__placeholder" aria-hidden="true">
+      <svg class="thumb__ring" viewBox="0 0 24 24" fill="none">
+        <polygon
+          points="12,3 4.21,7.5 4.21,16.5 12,21 19.79,16.5 19.79,7.5"
+          stroke="currentColor"
+          stroke-width="0.9"
+          stroke-linejoin="round"
+        />
+        <circle cx="12" cy="12" r="4.4" stroke="currentColor" stroke-width="0.7" />
+      </svg>
+
+      <div class="thumb__meta">
+        <span class="thumb__venue">{venue ?? 'Manuscript in preparation'}</span>
+        <span class="thumb__rule" />
+        {year && <span class="thumb__year">{year}</span>}
+      </div>
+    </div>
+  )
+}
+
+<style>
+  .thumb__img,
+  .thumb__placeholder {
+    width: 100%;
+    /* `height: auto` is required: Astro emits width/height attributes on the
+       <img>, and a specified height makes the browser ignore aspect-ratio. */
+    height: auto;
+    aspect-ratio: 16 / 10;
+    border-radius: 2px;
+  }
+
+  /* `contain`, not `cover`. These are graphical abstracts — dense diagrams in
+     aspect ratios from 2.5:1 to 1:1.6. Cropping them to the card would show a
+     meaningless slice, so the whole figure is letterboxed on a white ground
+     the way a journal presents it. */
+  .thumb__img {
+    object-fit: contain;
+    background: var(--surface);
+    padding: var(--space-2xs);
+    border-block-end: 1px solid var(--tan);
+  }
+
+  .thumb__placeholder {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: var(--space-s) var(--space-m);
+    background:
+      linear-gradient(
+        135deg,
+        color-mix(in srgb, var(--blue-soft) 20%, transparent),
+        transparent 55%
+      ),
+      var(--canvas-deep);
+    border-block-end: 1px solid var(--tan);
+    overflow: hidden;
+  }
+
+  /* Oversized aromatic ring, cropped by the frame — the mark used as texture. */
+  .thumb__ring {
+    position: absolute;
+    right: -14%;
+    top: 50%;
+    translate: 0 -50%;
+    width: 62%;
+    height: auto;
+    color: var(--tan-deep);
+    opacity: 0.5;
+  }
+
+  .thumb__meta {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.35rem;
+    max-width: 72%;
+  }
+
+  .thumb__venue {
+    font-family: var(--font-display);
+    font-variation-settings: 'SOFT' 0, 'WONK' 1, 'opsz' 40;
+    font-size: 1.15rem;
+    font-weight: 600;
+    line-height: 1.12;
+    color: var(--ink);
+    text-wrap: balance;
+  }
+
+  .thumb__year {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+  }
+
+  .thumb__rule {
+    width: 3rem;
+    height: 10px;
+    background-color: var(--tan-deep);
+    -webkit-mask-image: var(--bond-svg);
+    mask-image: var(--bond-svg);
+    -webkit-mask-repeat: repeat-x;
+    mask-repeat: repeat-x;
+    -webkit-mask-size: 20px 10px;
+    mask-size: 20px 10px;
+    --bond-svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='10' viewBox='0 0 20 10'%3E%3Cpath d='M0 7.5 L5 2.5 L10 7.5 L15 2.5 L20 7.5' fill='none' stroke='%23000' stroke-width='1.3'/%3E%3C/svg%3E");
+  }
+</style>

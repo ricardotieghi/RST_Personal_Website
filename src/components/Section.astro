@@ -1,0 +1,48 @@
+---
+import BondRule from './BondRule.astro';
+
+/**
+ * Shared section shell. The eyebrow carries an item count so a reader knows
+ * how long a list is before scrolling it — `§ PUBLICATIONS · n=13`.
+ */
+interface Props {
+  id: string;
+  label: string;
+  title: string;
+  count?: number;
+  lede?: string;
+  band?: boolean;
+  narrow?: boolean;
+}
+
+const { id, label, title, count, lede, band = false, narrow = false } = Astro.props;
+---
+
+<section id={id} class:list={['section', { 'section--band': band }]}>
+  <div class:list={[narrow ? 'wrap-narrow' : 'wrap']}>
+    <div class="section__head">
+      <p class="eyebrow">
+        <span class="eyebrow__mark" aria-hidden="true">§</span>
+        <span>{label}</span>
+        {
+          count !== undefined && (
+            <>
+              <span aria-hidden="true">·</span>
+              <span class="eyebrow__count">n={count}</span>
+            </>
+          )
+        }
+      </p>
+      <h2>{title}</h2>
+      <BondRule class="section__rule" />
+      {lede && <p class="section__lede">{lede}</p>}
+    </div>
+    <slot />
+  </div>
+</section>
+
+<style>
+  .section__rule {
+    margin-block-start: 0.35rem;
+  }
+</style>

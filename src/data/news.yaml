@@ -1,0 +1,101 @@
+# ---------------------------------------------------------------------------
+# Press and media coverage. Sorted newest first by `date`.
+# All URLs taken from the link annotations in the CV PDF; tracking parameters
+# have been stripped.
+# ---------------------------------------------------------------------------
+
+- id: replication-prize-winners
+  title: Announcing the Winners of the NIH Replication Prize
+  source: NIH Common Fund
+  date: 2026-03-01
+  dateLabel: March 2026
+  url: https://commonfund.nih.gov/replication-initiative/news/announcing-winners-nih-replication-prize-shaping-future-rigorous
+
+- id: knime-grouping-chemicals
+  title: Grouping Chemicals Automatically with KNIME
+  source: Medium — Low Code for Data Science
+  date: 2025-09-01
+  dateLabel: September 2025
+  url: https://medium.com/low-code-for-advanced-data-science/grouping-chemicals-automatically-with-knime-6c48c740564f
+  byline: true
+
+- id: nams-bullseye-dart
+  title: '2025 Annual Meeting Report: NAMs Hit the Bullseye in DART Assessments'
+  source: SOT ToXchange
+  date: 2025-05-01
+  dateLabel: May 2025
+  url: https://toxchange.toxicology.org/blogs/rebecca-somach/2025/05/15/2025-annual-meeting-report-nams-hit-the-bullseye-i
+
+- id: avid-reader-toxicity-tool
+  title: 'Scientific Journeys: From avid reader to toxicity tool developer'
+  source: NIEHS Environmental Factor
+  date: 2025-04-02
+  dateLabel: April 2025
+  url: https://www.niehs.nih.gov/news/factor/2025/4/beyond-the-bench/predictive-toxicology
+  featured: true
+
+- id: sot-meeting-summary
+  title: SOT meeting summary — News in Brief
+  source: NIEHS Environmental Factor
+  date: 2025-04-01
+  dateLabel: April 2025
+  url: https://www.niehs.nih.gov/news/factor/2025/4/beyond-the-bench/news-in-brief
+
+- id: outstanding-undergrads-sot
+  title: Outstanding undergraduate researchers recognized by SOT
+  source: SOT ToXchange
+  date: 2025-03-01
+  dateLabel: March 2025
+  url: https://toxchange.toxicology.org/blogs/robert-roth/2025/03/13/outstanding-undergraduate-researchers-recognized-b
+
+- id: estiv-ascct-award-winners
+  title: ESTIV–ASCCT Award Winners Series
+  source: European Society of Toxicology In Vitro
+  date: 2025-02-01
+  dateLabel: February 2025
+  url: https://www.estiv.org/estiv-ascct-award-winners-series-hung-lin-kan-and-ricardo-scheufen-tieghi/
+  featured: true
+
+- id: intramural-papers-month
+  title: Intramural Papers of the Month
+  source: NIEHS Environmental Factor
+  date: 2025-01-01
+  dateLabel: January 2025
+  url: https://www.niehs.nih.gov/news/factor/2025/1/papers/dir
+
+- id: scholars-connect-scicomm
+  title: Undergrads test science communication skills at fall event
+  source: NIEHS Environmental Factor
+  date: 2024-12-01
+  dateLabel: December 2024
+  url: https://www.niehs.nih.gov/news/factor/2024/12/science-highlights/scholars-connect
+
+- id: microplastics-ncsot
+  title: Microplastics and trainee development headline toxicology meeting
+  source: NIEHS Environmental Factor
+  date: 2024-11-01
+  dateLabel: November 2024
+  url: https://www.niehs.nih.gov/news/factor/2024/11/science-highlights/ncsot
+
+- id: scholars-connect-summer
+  title: Undergrads share research projects from NIEHS summer internship
+  source: NIEHS Environmental Factor
+  date: 2024-09-01
+  dateLabel: September 2024
+  url: https://www.niehs.nih.gov/news/factor/2024/9/awards-recognition/scholars-connect
+
+- id: complement-arie-summaries
+  title: Complement-ARIE Challenge Prize Winner Summaries
+  source: NIH Common Fund
+  date: 2024-08-01
+  dateLabel: '2024'
+  url: https://commonfund.nih.gov/complementarie/challengewinnersummaries
+
+- id: unc-mhi-surf
+  title: >-
+    Undergraduate student receives 2023 Summer Undergraduate Research Fellowship
+    from NIST
+  source: UNC McAllister Heart Institute
+  date: 2023-04-01
+  dateLabel: April 2023
+  url: https://www.med.unc.edu/mhi/undergraduate-student-ricardo-scheufen-tieghi-and-postdoctoral-fellow-pauline-bougaran-receive-2023-summer-undergraduate-research-fellowship-surf-award-from-national-institute-of-standards-and-t/

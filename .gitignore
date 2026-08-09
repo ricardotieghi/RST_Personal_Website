@@ -1,0 +1,35 @@
+# build output
+dist/
+.astro/
+
+# dependencies
+node_modules/
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# environment variables
+.env
+.env.production
+.env.local
+
+# CV source documents. The published PDF lives in public/cv/ and IS committed;
+# the Word original it is exported from is not — it is a working file, and
+# nobody should be downloading an editable copy of the CV from a public repo.
+*.doc
+*.docx
+~$*
+
+# macOS
+.DS_Store
+
+# editors
+.vscode/
+.idea/
+
+# Publication figure originals — multi-megabyte TIFFs from journals. The
+# normalised versions in src/assets/papers/ are what ship.
+img/papers-originals/

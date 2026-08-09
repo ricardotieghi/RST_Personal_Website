@@ -1,0 +1,242 @@
+---
+import Section from './Section.astro';
+import SocialIcons from './SocialIcons.astro';
+import { site } from '../data';
+
+const endpoint = site.contact.endpoint;
+---
+
+<Section id="contact" label="Contact" title={site.contact.heading} narrow>
+  <p class="contact__blurb">{site.contact.blurb}</p>
+
+  {
+    endpoint ? (
+      <form class="form" method="POST" action={endpoint} data-contact-form>
+        <div class="form__row">
+          <div class="field">
+            <label class="field__label" for="contact-name">
+              Your name
+            </label>
+            <input class="field__input" id="contact-name" name="name" type="text" required />
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="contact-email">
+              Email
+            </label>
+            <input
+              class="field__input"
+              id="contact-email"
+              name="email"
+              type="email"
+              autocomplete="email"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="field__label" for="contact-message">
+            Message
+          </label>
+          <textarea class="field__input" id="contact-message" name="message" rows="5" required />
+        </div>
+
+        {/* Honeypot — bots fill it, people never see it. */}
+        <div class="field field--trap" aria-hidden="true">
+          <label for="contact-company">Company</label>
+          <input id="contact-company" name="_gotcha" type="text" tabindex="-1" autocomplete="off" />
+        </div>
+
+        <div class="form__actions">
+          <button class="btn btn--primary" type="submit">
+            Send message
+            <span aria-hidden="true">→</span>
+          </button>
+          <p class="form__note" data-form-status role="status" aria-live="polite" />
+        </div>
+      </form>
+    ) : (
+      <div class="fallback">
+        <p class="fallback__text">
+          The contact form isn't connected yet. LinkedIn is the fastest way to reach me in
+          the meantime.
+        </p>
+        <div class="fallback__actions">
+          {site.links.linkedin && (
+            <a
+              class="btn btn--primary"
+              href={site.links.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Message on LinkedIn
+              <span aria-hidden="true">↗</span>
+            </a>
+          )}
+          <a class="btn btn--secondary" href="/cv">
+            View CV
+          </a>
+        </div>
+      </div>
+    )
+  }
+
+  <div class="contact__foot">
+    <SocialIcons />
+  </div>
+</Section>
+
+<style>
+  .contact__blurb {
+    max-width: var(--measure);
+    font-size: var(--step-1);
+    color: var(--body);
+  }
+
+  /* ---- form ---- */
+  .form {
+    margin-block-start: var(--space-l);
+    display: grid;
+    gap: var(--space-s);
+  }
+
+  .form__row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+    gap: var(--space-s);
+  }
+
+  .field {
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .field--trap {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+  .field__label {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .field__input {
+    padding: 0.7em 0.85em;
+    border: 1px solid var(--tan-deep);
+    border-radius: var(--radius);
+    background: var(--surface);
+    color: var(--body);
+    font-size: var(--step-0);
+    transition:
+      border-color 0.15s var(--ease),
+      box-shadow 0.15s var(--ease);
+  }
+
+  .field__input::placeholder {
+    color: var(--muted);
+  }
+
+  .field__input:focus-visible {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--blue-soft) 35%, transparent);
+  }
+
+  textarea.field__input {
+    resize: vertical;
+    min-height: 7rem;
+    font-family: inherit;
+  }
+
+  .form__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-s);
+  }
+
+  .form__note {
+    font-size: 0.875rem;
+    color: var(--muted);
+  }
+
+  .form__note[data-state='error'] {
+    color: #8a2b1f; /* 6.6:1 on cream */
+  }
+
+  .form__note[data-state='sent'] {
+    color: var(--accent);
+  }
+
+  /* ---- fallback ---- */
+  .fallback {
+    margin-block-start: var(--space-l);
+    padding: var(--space-m);
+    border: 1px solid var(--tan);
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+  }
+
+  .fallback__text {
+    max-width: 52ch;
+    color: var(--body);
+  }
+
+  .fallback__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2xs);
+    margin-block-start: var(--space-m);
+  }
+
+  .contact__foot {
+    margin-block-start: var(--space-xl);
+    padding-block-start: var(--space-m);
+    border-block-start: 1px solid var(--tan);
+  }
+</style>
+
+<script>
+  /* Submits over fetch so the visitor stays on the page. If anything about the
+     request fails, the form falls back to a normal POST navigation. */
+  const form = document.querySelector<HTMLFormElement>('[data-contact-form]');
+  const note = document.querySelector<HTMLElement>('[data-form-status]');
+
+  form?.addEventListener('submit', async (event) => {
+    if (!note) return;
+    event.preventDefault();
+
+    const button = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+    button?.setAttribute('disabled', '');
+    note.dataset.state = '';
+    note.textContent = 'Sending…';
+
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { Accept: 'application/json' },
+      });
+
+      if (!response.ok) throw new Error(String(response.status));
+
+      form.reset();
+      note.dataset.state = 'sent';
+      note.textContent = 'Thanks — your message is on its way.';
+    } catch {
+      note.dataset.state = 'error';
+      note.textContent = 'That did not go through. Try again, or reach me on LinkedIn.';
+    } finally {
+      button?.removeAttribute('disabled');
+    }
+  });
+</script>

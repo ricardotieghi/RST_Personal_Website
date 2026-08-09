@@ -1,0 +1,125 @@
+---
+import { site } from '../data';
+
+/**
+ * Credential marquee. The list is rendered twice so the loop is seamless; the
+ * duplicate is hidden from assistive tech. Under reduced motion the animation
+ * stops and the strip becomes a plain wrapped list.
+ */
+const items = site.ticker;
+---
+
+<div class="ticker" aria-label="Selected credentials">
+  <div class="ticker__track">
+    <ul class="ticker__list">
+      {
+        items.map((item) => (
+          <li class="ticker__item">
+            <span class="ticker__dot" aria-hidden="true" />
+            {item}
+          </li>
+        ))
+      }
+    </ul>
+    <ul class="ticker__list" aria-hidden="true">
+      {
+        items.map((item) => (
+          <li class="ticker__item">
+            <span class="ticker__dot" />
+            {item}
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</div>
+
+<style>
+  .ticker {
+    overflow: hidden;
+    border-block-end: 1px solid var(--tan);
+    background: var(--canvas-deep);
+    padding-block: 0.7rem;
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent,
+      #000 6%,
+      #000 94%,
+      transparent
+    );
+    mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+  }
+
+  .ticker__track {
+    display: flex;
+    width: max-content;
+    animation: ticker-scroll 46s linear infinite;
+  }
+
+  .ticker:hover .ticker__track,
+  .ticker:focus-within .ticker__track {
+    animation-play-state: paused;
+  }
+
+  .ticker__list {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .ticker__item {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-s);
+    padding-inline: var(--space-s);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  .ticker__dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--blue-soft);
+    flex-shrink: 0;
+  }
+
+  @keyframes ticker-scroll {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ticker {
+      -webkit-mask-image: none;
+      mask-image: none;
+    }
+
+    .ticker__track {
+      animation: none;
+      width: 100%;
+    }
+
+    /* One copy is enough when nothing scrolls. */
+    .ticker__list[aria-hidden] {
+      display: none;
+    }
+
+    .ticker__list {
+      flex-wrap: wrap;
+      justify-content: center;
+      row-gap: 0.35rem;
+    }
+  }
+</style>

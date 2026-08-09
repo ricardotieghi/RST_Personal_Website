@@ -1,0 +1,138 @@
+# ---------------------------------------------------------------------------
+# Awards and honors.
+#
+# group:  research | presentation      (the two columns on the page)
+# result: the placement — "Prize Winner", "1st Prize", "Finalist", …
+# value:  prize amount as written on the CV, or null
+# ---------------------------------------------------------------------------
+
+# ---- research awards ------------------------------------------------------
+
+- id: nih-replication-prize
+  title: NIH Replication Prize
+  result: Prize Winner
+  value: ~$55,000
+  group: research
+  year: 2026
+  url: https://commonfund.nih.gov/replication-initiative/news/announcing-winners-nih-replication-prize-shaping-future-rigorous
+  note: Recognized in both Track 1 (Replication Ideas) and Track 2 (Replication Exemplars).
+
+- id: complement-arie-challenge
+  title: NIH Complement-ARIE Challenge
+  result: Prize Winner
+  value: ~$50,000
+  group: research
+  url: https://commonfund.nih.gov/complementarie/challengewinnersummaries
+
+- id: sot-ivamss-paper-of-year
+  title: Best Paper of the Year — SOT In Vitro and Alternatives Section
+  result: Winner
+  group: research
+  year: 2025
+
+- id: niehs-paper-of-month
+  title: Best Intramural Paper of the Month, NIEHS
+  result: Winner ×2
+  group: research
+  url: https://www.niehs.nih.gov/news/factor/2025/1/papers/dir
+
+- id: surf-fellowship
+  title: Summer Undergraduate Research Fellowship (SURF)
+  result: Winner
+  value: ~$4,000
+  group: research
+  year: 2023
+  url: https://www.med.unc.edu/mhi/undergraduate-student-ricardo-scheufen-tieghi-and-postdoctoral-fellow-pauline-bougaran-receive-2023-summer-undergraduate-research-fellowship-surf-award-from-national-institute-of-standards-and-t/
+
+# ---- presentation & institutional awards ----------------------------------
+
+- id: unc-spearman-award
+  title: UNC Chancellor's Walter S. Spearman Award
+  result: Recipient
+  group: presentation
+  year: 2025
+  note: >-
+    Awarded to the senior whose academic achievement, leadership, and strength
+    of character are judged most outstanding.
+
+- id: sot-undergrad-research-award
+  title: SOT Undergraduate Research Award
+  result: Winner
+  value: ~$1,500
+  group: presentation
+  year: 2025
+
+- id: wc13-best-oral
+  title: Best Oral Presentation, Early Career — 13th World Congress
+  result: Winner
+  value: ~$500
+  group: presentation
+  year: 2025
+  note: Sponsored by AIVT.
+
+- id: wc13-travel
+  title: Travel Award — 13th World Congress
+  result: Winner
+  value: ~$1,000
+  group: presentation
+  year: 2025
+
+- id: bdrp-innovator
+  title: BDRP Innovator Award
+  result: 2nd Prize
+  value: ~$300
+  group: presentation
+  year: 2025
+
+- id: rdtss-poster
+  title: RDTSS Poster Competition
+  result: 1st Prize
+  value: ~$400
+  group: presentation
+  note: Sponsored by Pfizer and Elsevier.
+
+- id: bdrp-travel
+  title: Society for Birth Defects Research Travel Award
+  result: Winner
+  value: ~$500
+  group: presentation
+  year: 2025
+
+- id: sot-diversity-award
+  title: SOT Diversity Initiatives Career Development Award
+  result: Winner
+  value: ~$1,000
+  group: presentation
+
+- id: ncsot-poster
+  title: NCSOT Undergraduate Student Poster Competition
+  result: 1st Prize
+  value: ~$300
+  group: presentation
+  year: 2024
+
+- id: ascct-fitzpatrick
+  title: ASCCT Suzanne Fitzpatrick Student Travel Award
+  result: Winner
+  value: ~$1,000
+  group: presentation
+  year: 2024
+  url: https://www.estiv.org/estiv-ascct-award-winners-series-hung-lin-kan-and-ricardo-scheufen-tieghi/
+
+- id: niehs-elevator-pitch
+  title: NIEHS Scholars Connect Elevator Pitch Competition
+  result: 1st Prize
+  group: presentation
+  year: 2024
+
+- id: unc-our-travel
+  title: UNC Office of Undergraduate Research Travel Award
+  result: Winner
+  value: ~$300
+  group: presentation
+
+- id: sot-bmss-abstract
+  title: SOT 63rd Annual Meeting Biological Modeling Specialty Section Abstract Award
+  result: Finalist
+  group: presentation
+  year: 2024

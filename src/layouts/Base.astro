@@ -1,0 +1,117 @@
+---
+import '@fontsource-variable/fraunces/full.css';
+import '@fontsource-variable/inter';
+import '@fontsource/ibm-plex-mono/400.css';
+import '@fontsource/ibm-plex-mono/500.css';
+import '../styles/tokens.css';
+
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { site, publications } from '../data';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title, description = site.tagline } = Astro.props;
+
+const pageTitle = title ? `${title} — ${site.name}` : `${site.name} — ${site.tagline}`;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ogImage = new URL('/og.png', Astro.site).href;
+
+const sameAs = Object.values(site.links).filter(Boolean);
+
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: site.name,
+  alternateName: site.shortName,
+  url: Astro.site?.href,
+  image: ogImage,
+  jobTitle: site.role,
+  description: site.tagline,
+  worksFor: { '@type': 'Organization', name: 'Guidehouse' },
+  alumniOf: {
+    '@type': 'CollegeOrUniversity',
+    name: 'University of North Carolina at Chapel Hill',
+  },
+  homeLocation: { '@type': 'Place', name: site.location },
+  knowsAbout: [
+    'Computational Toxicology',
+    'Machine Learning',
+    'New Approach Methodologies',
+    'QSAR Modeling',
+    'Artificial Intelligence Policy',
+    'Regulatory Science',
+  ],
+  sameAs,
+};
+
+const articlesSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: `Publications by ${site.name}`,
+  itemListElement: publications
+    .filter((p) => p.status === 'published' && p.url)
+    .map((p, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      item: {
+        '@type': 'ScholarlyArticle',
+        headline: p.title,
+        url: p.url,
+        datePublished: p.year ? String(p.year) : undefined,
+        publisher: p.venue ? { '@type': 'Organization', name: p.venue } : undefined,
+        author: { '@type': 'Person', name: site.name },
+      },
+    })),
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta name="author" content={site.name} />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+    <meta name="theme-color" content="#fdf7ec" />
+
+    <meta property="og:type" content="profile" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:site_name" content={site.name} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(personSchema)}
+    />
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(articlesSchema)}
+    />
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <Header />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

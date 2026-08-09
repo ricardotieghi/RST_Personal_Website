@@ -1,0 +1,614 @@
+---
+import { existsSync } from 'node:fs';
+import { resolve } from 'node:path';
+import Base from '../layouts/Base.astro';
+import BondRule from '../components/BondRule.astro';
+import SocialIcons from '../components/SocialIcons.astro';
+import {
+  site,
+  publicationGroups,
+  timeline,
+  talks,
+  posters,
+  awardGroups,
+  newsSorted,
+  stats,
+} from '../data';
+import { authorsToHtml, endWithPeriod } from '../utils/format';
+
+/**
+ * The CV renders from the same YAML the homepage uses, so it can never drift
+ * out of sync with the sections above. The PDF is a download, not the source.
+ */
+const upcoming = timeline.filter((t) => t.upcoming);
+
+/**
+ * The PDF is gitignored, so it exists locally but not in CI. Checked at build
+ * time (cwd is the project root during `astro dev` and `astro build`) so the
+ * download button and viewer simply do not render when there is no file to
+ * serve, rather than shipping a link that 404s.
+ */
+const hasPdf = existsSync(resolve(process.cwd(), 'public', site.cv.file.replace(/^\//, '')));
+---
+
+<Base
+  title="Curriculum vitae"
+  description={`Full CV for ${site.name} — publications, invited talks, awards, and experience in computational toxicology and AI policy.`}
+>
+  <article class="cv">
+    <header class="cv__header section">
+      <div class="wrap-narrow">
+        <p class="eyebrow">
+          <span class="eyebrow__mark" aria-hidden="true">§</span>
+          <span>Curriculum vitae</span>
+          <span aria-hidden="true">·</span>
+          <span class="eyebrow__count">{site.cv.updated}</span>
+        </p>
+
+        <h1 class="cv__name">{site.name}</h1>
+        <BondRule width="9rem" />
+
+        <p class="cv__role">
+          <strong>{site.role}</strong> — {site.roleDetail}
+        </p>
+        <p class="cv__where">{site.location} · {site.pronouns}</p>
+
+        <div class="cv__actions no-print">
+          {
+            hasPdf && (
+              <a class="btn btn--primary" href={site.cv.file} download>
+                Download PDF
+                <span aria-hidden="true">↓</span>
+              </a>
+            )
+          }
+          <a class="btn btn--secondary" href="/">Back to homepage</a>
+        </div>
+
+        <div class="cv__social no-print">
+          <SocialIcons size="sm" />
+        </div>
+      </div>
+    </header>
+
+    <div class="wrap-narrow cv__body">
+      <!-- Education -->
+      <section class="block">
+        <h2 class="block__title">Education</h2>
+        {
+          site.education.map((entry) => (
+            <div class="entry">
+              <div class="entry__head">
+                <h3 class="entry__title">{entry.institution}</h3>
+                <p class="entry__period">{entry.period}</p>
+              </div>
+              <p class="entry__sub">{entry.degree}</p>
+              {entry.detail && <p class="entry__detail">{entry.detail}</p>}
+            </div>
+          ))
+        }
+      </section>
+
+      <!-- Experience -->
+      <section class="block">
+        <h2 class="block__title">Research & professional experience</h2>
+        {
+          site.experience.map((job) => (
+            <div class="entry">
+              <div class="entry__head">
+                <h3 class="entry__title">{job.org}</h3>
+                <p class="entry__period">{job.period}</p>
+              </div>
+              <p class="entry__sub">{job.title}</p>
+              {job.orgDetail && <p class="entry__detail">{job.orgDetail}</p>}
+              {job.supervisor && <p class="entry__detail">Supervisor: {job.supervisor}</p>}
+              <ul class="entry__points">
+                {job.points.map((point) => (
+                  <li>{point}</li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </section>
+
+      <!-- Publications -->
+      <section class="block">
+        <h2 class="block__title">
+          Publications
+          <span class="block__meta">
+            {stats.peerReviewed} peer-reviewed · {stats.citations} citations · h-index{' '}
+            {stats.hIndex}
+          </span>
+        </h2>
+
+        {
+          publicationGroups.map((group) => (
+            <div class="sublist">
+              <h3 class="sublist__label">{group.label}</h3>
+              <ol class="reflist">
+                {group.items.map((pub) => (
+                  <li class="ref">
+                    <span
+                      class="ref__authors"
+                      set:html={authorsToHtml(endWithPeriod(pub.authors))}
+                    />
+                    <span class="ref__title">{pub.title}.</span>
+                    {pub.venue && <span class="ref__venue"> {pub.venue}</span>}
+                    {pub.year && <span> ({pub.year})</span>}
+                    {pub.coFirst && <span class="ref__flag"> Co-first author.</span>}
+                    {pub.url && (
+                      <>
+                        {' '}
+                        <a class="ref__url" href={pub.url} target="_blank" rel="noopener noreferrer">
+                          {pub.url.replace(/^https?:\/\//, '')}
+                        </a>
+                      </>
+                    )}
+                    {pub.badges && (
+                      <span class="ref__badges">
+                        {pub.badges.map((badge) => (
+                          <span class="chip chip--award">{badge}</span>
+                        ))}
+                      </span>
+                    )}
+                  </li>
+                ))}
+              </ol>
+            </div>
+          ))
+        }
+      </section>
+
+      <!-- Talks -->
+      <section class="block">
+        <h2 class="block__title">
+          Invited talks
+          <span class="block__meta">
+            {talks.length} total · {upcoming.length} upcoming
+          </span>
+        </h2>
+        <ul class="linelist">
+          {
+            talks.map((talk) => (
+              <li class="line">
+                <span class="line__date">{talk.dateLabel}</span>
+                <span class="line__body">
+                  {talk.award && <span class="chip chip--award">{talk.award}</span>}
+                  {talk.upcoming && <span class="chip chip--tan">Upcoming</span>}
+                  <strong>{talk.title}</strong> — {talk.event}, {talk.location}.
+                  {talk.url && (
+                    <>
+                      {' '}
+                      <a href={talk.url} target="_blank" rel="noopener noreferrer">
+                        {talk.urlLabel ?? 'Link'}
+                      </a>
+                    </>
+                  )}
+                </span>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+
+      <!-- Posters -->
+      <section class="block">
+        <h2 class="block__title">Conference posters</h2>
+        <ul class="linelist">
+          {
+            posters.map((poster) => (
+              <li class="line">
+                <span class="line__date">{poster.dateLabel}</span>
+                <span class="line__body">
+                  {poster.award && <span class="chip chip--award">{poster.award}</span>}
+                  <strong>{poster.title}</strong> — {poster.event}, {poster.location}.
+                </span>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+
+      <!-- Awards -->
+      <section class="block">
+        <h2 class="block__title">Awards</h2>
+        {
+          awardGroups.map((group) => (
+            <div class="sublist">
+              <h3 class="sublist__label">{group.label}</h3>
+              <ul class="linelist">
+                {group.items.map((award) => (
+                  <li class="line">
+                    <span class="line__date">{award.result}</span>
+                    <span class="line__body">
+                      <strong>{award.title}</strong>
+                      {award.value && <span class="line__value"> {award.value}</span>}
+                      {award.year && <span> · {award.year}</span>}
+                      {award.note && <span class="line__note"> {award.note}</span>}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </section>
+
+      <!-- Service & skills -->
+      <section class="block">
+        <h2 class="block__title">Leadership & service</h2>
+        {
+          site.service.map((entry) => (
+            <div class="entry">
+              <div class="entry__head">
+                <h3 class="entry__title">{entry.org}</h3>
+                <p class="entry__period">{entry.period}</p>
+              </div>
+              <p class="entry__sub">{entry.title}</p>
+              {entry.detail && <p class="entry__detail">{entry.detail}</p>}
+            </div>
+          ))
+        }
+      </section>
+
+      <section class="block">
+        <h2 class="block__title">Skills</h2>
+        {
+          site.skills.map((group) => (
+            <div class="entry">
+              <p class="entry__sub">{group.group}</p>
+              <ul class="taglist">
+                {group.items.map((item) => (
+                  <li class="chip chip--tan">{item}</li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </section>
+
+      <!-- News -->
+      <section class="block">
+        <h2 class="block__title">News coverage</h2>
+        <ul class="linelist">
+          {
+            newsSorted.map((item) => (
+              <li class="line">
+                <span class="line__date">{item.dateLabel}</span>
+                <span class="line__body">
+                  <a href={item.url} target="_blank" rel="noopener noreferrer">
+                    {item.title}
+                  </a>{' '}
+                  — {item.source}.
+                </span>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+
+      <!-- PDF — only rendered when a PDF is actually present to serve -->
+      {
+        hasPdf ? (
+          <section class="block no-print">
+            <h2 class="block__title">Original PDF</h2>
+            <p class="block__lede">
+              The same CV as a PDF, laid out for printing and for application portals.
+            </p>
+            <a class="btn btn--primary pdf__cta" href={site.cv.file} download>
+              Download PDF
+              <span aria-hidden="true">↓</span>
+            </a>
+            <object class="pdf" data={site.cv.file} type="application/pdf" aria-label="CV as a PDF">
+              <p class="pdf__fallback">
+                Your browser can't display the PDF inline.
+                <a href={site.cv.file} download>Download it instead</a>.
+              </p>
+            </object>
+          </section>
+        ) : (
+          <section class="block no-print">
+            <h2 class="block__title">Need this as a file?</h2>
+            <p class="block__lede">
+              Use your browser's print dialog to save this page as a PDF — it is
+              formatted for print. For an official copy, ask me directly.
+            </p>
+            <div class="pdf__cta">
+              <a class="btn btn--primary" href="/#contact">
+                Get in touch
+                <span aria-hidden="true">→</span>
+              </a>
+            </div>
+          </section>
+        )
+      }
+    </div>
+  </article>
+</Base>
+
+<style>
+  .cv__header {
+    border-block-end: 1px solid var(--tan);
+    padding-block-end: var(--space-xl);
+  }
+
+  .cv__name {
+    margin-block-start: var(--space-s);
+    font-size: var(--step-5);
+  }
+
+  .cv__role {
+    margin-block-start: var(--space-s);
+    font-size: var(--step-1);
+  }
+
+  .cv__where {
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-block-start: var(--space-3xs);
+  }
+
+  .cv__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2xs);
+    margin-block-start: var(--space-l);
+  }
+
+  .cv__social {
+    margin-block-start: var(--space-m);
+  }
+
+  .cv__body {
+    padding-block: var(--space-2xl) var(--space-3xl);
+  }
+
+  /* ---- blocks ---- */
+  .block + .block {
+    margin-block-start: var(--space-2xl);
+  }
+
+  .block__title {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-2xs);
+    font-size: var(--step-2);
+    padding-block-end: var(--space-2xs);
+    border-block-end: 2px solid var(--ink);
+  }
+
+  .block__meta {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .block__lede {
+    margin-block-start: var(--space-s);
+    color: var(--body);
+  }
+
+  /* ---- entries ---- */
+  .entry {
+    margin-block-start: var(--space-m);
+  }
+
+  .entry__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-2xs);
+  }
+
+  .entry__title {
+    font-size: var(--step-1);
+  }
+
+  .entry__period {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  .entry__sub {
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  .entry__detail {
+    font-size: 0.875rem;
+    color: var(--muted);
+  }
+
+  .entry__points {
+    margin-block-start: var(--space-2xs);
+    padding-inline-start: 1.1rem;
+    display: grid;
+    gap: 0.3rem;
+  }
+
+  .entry__points li {
+    color: var(--body);
+  }
+
+  .entry__points li::marker {
+    color: var(--blue-soft);
+  }
+
+  /* ---- sublists ---- */
+  .sublist {
+    margin-block-start: var(--space-m);
+  }
+
+  .sublist__label {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ---- reference list ---- */
+  .reflist {
+    margin-block-start: var(--space-2xs);
+    padding-inline-start: 1.4rem;
+    display: grid;
+    gap: var(--space-s);
+  }
+
+  .ref {
+    line-height: 1.55;
+    color: var(--body);
+  }
+
+  .ref::marker {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+
+  .ref__authors :global(.self) {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  /* endWithPeriod() supplies the period; only the space is needed here. */
+  .ref__authors::after {
+    content: ' ';
+  }
+
+  .ref__title {
+    color: var(--ink);
+  }
+
+  .ref__venue {
+    font-style: italic;
+  }
+
+  .ref__flag {
+    color: var(--muted);
+    font-size: 0.875rem;
+  }
+
+  .ref__url {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    /* Break long DOIs only when they would otherwise overflow. */
+    overflow-wrap: anywhere;
+  }
+
+  .ref__badges {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    margin-inline-start: 0.35rem;
+    vertical-align: middle;
+  }
+
+  /* ---- line lists ---- */
+  .linelist {
+    margin-block-start: var(--space-2xs);
+    list-style: none;
+    padding: 0;
+  }
+
+  .line {
+    display: grid;
+    grid-template-columns: 9rem minmax(0, 1fr);
+    gap: var(--space-s);
+    padding-block: 0.55rem;
+    border-block-end: 1px solid var(--tan);
+    line-height: 1.5;
+  }
+
+  .line__date {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding-block-start: 0.2em;
+  }
+
+  .line__body {
+    color: var(--body);
+  }
+
+  .line__body strong {
+    font-weight: 500;
+  }
+
+  .line__body .chip {
+    margin-inline-end: 0.35rem;
+    vertical-align: middle;
+  }
+
+  .line__value {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--ink);
+  }
+
+  .line__note {
+    color: var(--muted);
+    font-size: 0.875rem;
+  }
+
+  .taglist {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    list-style: none;
+    padding: 0;
+    margin-block-start: var(--space-2xs);
+  }
+
+  /* ---- pdf ---- */
+  .pdf__cta {
+    margin-block-start: var(--space-m);
+  }
+
+  .pdf {
+    display: block;
+    width: 100%;
+    height: 42rem;
+    margin-block-start: var(--space-m);
+    border: 1px solid var(--tan);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+
+  .pdf__fallback {
+    padding: var(--space-m);
+  }
+
+  @media (max-width: 48rem) {
+    .line {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0.2rem;
+    }
+
+    .line__date {
+      padding-block-start: 0;
+    }
+
+    /* Inline PDF viewers are unusable on phones — the download button covers it. */
+    .pdf {
+      display: none;
+    }
+  }
+</style>

@@ -1,0 +1,188 @@
+# ---------------------------------------------------------------------------
+# Invited talks and conference posters — one timeline, filtered on the page.
+#
+# kind:  talk | workshop | webinar | poster   (drives the type filter)
+# date:  ISO date used only for sorting. Use the 1st when only a month is known.
+# dateLabel: what actually renders.
+# url:   recording or listing, if one exists.
+# image: filename in src/assets/photos/, or null.
+# ---------------------------------------------------------------------------
+
+- id: sot-66-ce-course
+  title: Continuing Education Course — Speaker & Co-Chair
+  event: SOT 66th Annual Meeting
+  location: San Antonio, Texas
+  date: 2027-03-01
+  dateLabel: March 2027
+  kind: workshop
+  upcoming: true
+
+- id: act-2026-ce-course
+  title: Continuing Education Course — Speaker & Co-Chair
+  event: ACT Annual Meeting
+  location: San Antonio, Texas
+  date: 2026-11-01
+  dateLabel: November 2026
+  kind: workshop
+  upcoming: true
+
+- id: dynanet-brown-bag
+  title: Brown Paper Bag Seminar
+  event: Dynanet Corporation
+  location: Virtual
+  date: 2025-12-01
+  dateLabel: December 2025
+  kind: talk
+
+- id: gw-law-ai-animals
+  title: AI, Animals, and the Law
+  event: George Washington University Law School
+  location: Washington, D.C.
+  date: 2025-11-01
+  dateLabel: November 2025
+  kind: talk
+  url: https://www.youtube.com/watch?v=BE8sue7kJOs&t=1488s
+  urlLabel: Watch recording
+
+- id: ascct-2025-ce-course
+  title: >-
+    Comprehensive Toxicity Assessment with Agentic AI — CE Course Speaker & Co-Chair
+  event: ASCCT 13th Annual Meeting
+  location: Durham, North Carolina
+  date: 2025-10-01
+  dateLabel: October 2025
+  kind: workshop
+
+- id: wc13-rio
+  title: Two presentations on in silico alternatives to animal testing
+  event: 13th World Congress on Alternatives and Animal Use in the Life Sciences
+  location: Rio de Janeiro, Brazil
+  date: 2025-08-01
+  dateLabel: August 2025
+  kind: talk
+  award: Early Career Best Oral Presentation
+  image: wc13-panel.webp
+
+- id: bdrp-2025
+  title: Innovator Award Finalist presentation
+  event: Society for Birth Defects Research & Prevention Annual Meeting
+  location: Denver, Colorado
+  date: 2025-06-01
+  dateLabel: June 2025
+  kind: talk
+  award: BDRP Innovator Award Finalist
+
+- id: dtt-science-forum
+  title: Division of Translational Toxicology Science Forum
+  event: NIEHS
+  location: Virtual
+  date: 2025-05-01
+  dateLabel: May 2025
+  kind: talk
+
+- id: nscp-symposium-2025
+  title: Annual Symposium presentation
+  event: NIEHS Scholars Connect Program
+  location: Durham, North Carolina
+  date: 2025-04-01
+  dateLabel: April 2025
+  kind: talk
+  image: nscp-award.jpg
+
+- id: sot-64-symposium
+  title: Symposium Speaker & Co-Chair
+  event: SOT 64th Annual Meeting
+  location: Orlando, Florida
+  date: 2025-03-01
+  dateLabel: March 2025
+  kind: talk
+  image: sot-2025-award.jpg
+
+- id: ascct-estiv-webinar
+  title: ASCCT–ESTIV Award Winners Webinar
+  event: ASCCT & ESTIV
+  location: Virtual
+  date: 2025-02-01
+  dateLabel: February 2025
+  kind: webinar
+  url: https://www.ascctox.org/webinar-archive-25
+  urlLabel: Watch recording
+
+- id: niehs-3mt
+  title: Three Minute Thesis Competition — NIEHS Fall Connection
+  event: NIEHS
+  location: Durham, North Carolina
+  date: 2024-11-01
+  dateLabel: November 2024
+  kind: talk
+  award: 1st Prize
+  image: nscp-fall-connection.jpg
+
+- id: ascct-2024-flash
+  title: Flash Talk
+  event: ASCCT 13th Annual Meeting
+  location: Durham, North Carolina
+  date: 2024-10-01
+  dateLabel: October 2024
+  kind: talk
+  award: Suzanne Fitzpatrick Award
+  image: ascct-award.jpg
+
+# ---- posters --------------------------------------------------------------
+
+- id: poster-sot-64
+  title: >-
+    A Novel Machine Learning Model and a Web Portal for Predicting the Human
+    Skin Sensitization Effects of Chemical Agents
+  event: SOT 64th Annual Meeting
+  location: Orlando, Florida
+  date: 2025-03-02
+  dateLabel: March 2025
+  kind: poster
+  award: SOT Undergraduate Research Award
+  image: sot-2025-poster-award.jpg
+
+- id: poster-ascct-13
+  title: >-
+    HuSSPred: an in-silico HPPT-based tool for Human Skin Sensitization
+    Prediction & the DeTox Project
+  event: ASCCT 13th Annual Meeting
+  location: Durham, North Carolina
+  date: 2024-10-02
+  dateLabel: October 2024
+  kind: poster
+  award: ASCCT Travel Award
+
+- id: poster-ncsot-2024
+  title: >-
+    HuSSPred: an in-silico HPPT-based tool for Human Skin Sensitization Prediction
+  event: NCSOT Annual Meeting
+  location: Durham, North Carolina
+  date: 2024-09-01
+  dateLabel: September 2024
+  kind: poster
+  award: 1st Prize
+  image: ncsot-poster-1.jpg
+
+- id: poster-unc-cur
+  title: >-
+    Endothelial Nuclear Proteins SUN1 & SUN2 regulate Microtubule Organization
+    in Endothelial Cells
+  event: UNC Celebration of Undergraduate Research
+  location: Chapel Hill, North Carolina
+  date: 2024-05-01
+  dateLabel: May 2024
+  kind: poster
+  award: SURF Award
+
+- id: poster-sot-63
+  title: >-
+    PregPred: A Novel Web-Accessible Computational Tool for Predicting
+    Developmental Toxicity
+  event: SOT 63rd Annual Meeting
+  location: Salt Lake City, Utah
+  date: 2024-03-01
+  dateLabel: March 2024
+  kind: poster
+  award: BMSS Abstract Award Finalist
+  image: sot-2024.jpg
