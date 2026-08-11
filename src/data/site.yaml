@@ -152,6 +152,47 @@ contact:
     methodologies, or AI in federal biomedical research.
 
 # ---------------------------------------------------------------------------
+# Visitor analytics.
+#
+# Cloudflare Web Analytics. Free, sets no cookies, and works on GitHub Pages —
+# your domain does NOT need to be proxied through Cloudflare.
+#
+# To turn it on: Cloudflare dashboard → Web Analytics → Add a site →
+# ricardotieghi.com → copy the token out of the JS snippet they show you.
+#
+# The token is a public, write-only identifier. It lets a browser send a
+# pageview in; it cannot read your stats back out. Safe in a public repo.
+# The beacon is only emitted in production builds, so `npm run dev` never
+# pollutes your numbers.
+# ---------------------------------------------------------------------------
+analytics:
+  cloudflareToken: null
+
+# ---------------------------------------------------------------------------
+# Kit (formerly ConvertKit) — subscriptions and gated resources.
+#
+# `formAction` is the URL from Kit's **HTML** embed (Embed → HTML), not their
+# JavaScript embed and not the v4 API. Copy it verbatim: Kit is mid-rebrand
+# from app.convertkit.com to app.kit.com, so do not hand-write it.
+#
+# Like the others, this is a public write-only endpoint. NEVER put a Kit API
+# key (kit_...) anywhere in this repo — those can read your subscriber list.
+#
+# Resource files belong in Kit (Form → Settings → Incentive → upload), never in
+# public/. Anything in public/ is downloadable by URL and indexed by Google,
+# which would defeat the point of gating it.
+# ---------------------------------------------------------------------------
+kit:
+  formAction: null
+  heading: Get the resource
+  blurb: >-
+    Enter your details and I'll email you the download link.
+  buttonLabel: Send it to me
+  consentLabel: >-
+    Email me this resource and occasional updates on my research. You can
+    unsubscribe at any time.
+
+# ---------------------------------------------------------------------------
 # Required on a site that describes federal contract work.
 # ---------------------------------------------------------------------------
 disclaimer: >-

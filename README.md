@@ -21,6 +21,7 @@ npm run dev        # http://localhost:4321
 | `npm run build` | Static build into `dist/` |
 | `npm run preview` | Serve the built site exactly as it will deploy |
 | `npm run contrast` | Check every text colour against WCAG AA. CI runs this too. |
+| `npm run scan` | Fail if any credential leaked into `dist/`. CI runs this too. |
 | `npm run images` | Re-process photos from `img/` into `src/assets/photos/` |
 
 ---
@@ -104,18 +105,111 @@ Keep it wherever you like locally; git will ignore it.
 
 ---
 
+## Analytics, forms, and gated resources
+
+Three integrations are wired but switched off. Each is `null` in `site.yaml`, and
+each renders **nothing at all** until you paste a value in — so the site is safe
+to deploy in any state.
+
+### The rule that governs all of this
+
+**This site is static, served from a public repo. There is no server and there
+are no secrets.** Everything in the repo and everything in the built HTML is
+world-readable.
+
+| Safe to commit | Never commit |
+|---|---|
+| Cloudflare beacon token | Kit API keys (`kit_…`, `ck_…`) |
+| Formspree form endpoint | Formspree API tokens |
+| Kit **form action** URL | Anything from a provider's "API" tab |
+
+The three on the left are *write-only public identifiers* — a browser can send
+data in through them, but they cannot read anything back out. They belong in
+public HTML, exactly like a `mailto:` link. The ones on the right can read your
+subscriber list, so they must never appear here. `npm run scan` checks the built
+output for them and **fails CI** if any turn up.
+
+Submissions themselves never touch this repo — they live in Formspree's and
+Kit's dashboards, behind their logins.
+
+### 1. Visitor analytics — Cloudflare Web Analytics
+
+Free, sets no cookies, works on GitHub Pages. Your domain does **not** need to be
+proxied through Cloudflare.
+
+Cloudflare dashboard → **Web Analytics** → Add a site → `ricardotieghi.com` →
+copy the token out of the snippet, then:
+
+```yaml
+analytics:
+  cloudflareToken: 0123456789abcdef0123456789abcdef
+```
+
+The beacon is emitted **only in production builds**, so `npm run dev` never
+inflates your numbers. Data is retained for six months.
+
+### 2. Contact form — Formspree
+
+[formspree.io](https://formspree.io) → New form → copy the endpoint:
+
+```yaml
+contact:
+  endpoint: https://formspree.io/f/xxxxxxxx
+```
+
+That swaps the LinkedIn fallback for the real form. Free tier is 50 submissions
+per month. Your email address never appears in the HTML.
+
+### 3. Gated resources — Kit
+
+Kit stores subscribers and hosts the file, which is what makes the gate real:
+the download URL never exists in this repo, so it cannot be found, shared, or
+indexed by Google.
+
+**Once, to set up:**
+
+```yaml
+kit:
+  formAction: https://app.kit.com/forms/1234567/subscriptions
+```
+
+Get that URL from Kit → your form → **Embed → HTML** (not the JavaScript embed,
+and not the v4 API — that needs a server-side key this site cannot hold).
+
+**Then for each resource:**
+
+1. Kit → **Create form**
+2. Form settings → **Incentive** → enable "Send incentive email"
+3. **Upload the file to Kit.** Do not put it in `public/`.
+4. Drop the component wherever it belongs:
+
+```astro
+---
+import SubscribeForm from '../components/SubscribeForm.astro';
+---
+<SubscribeForm resource="the AOP knowledge-graph primer" id="aop-primer" />
+```
+
+The flow: visitor submits → Kit sends a confirmation email → they confirm →
+Kit emails the download link. You get a verified address; they get the file.
+
+> **Never put a gated file in `public/`.** Anything there is downloadable by
+> anyone who guesses the URL and will be indexed by search engines, which
+> defeats the point of gating it.
+
+### Privacy page
+
+`/privacy` is generated **from this configuration**. Switch analytics on and it
+gains an analytics section; leave Kit off and it says nothing about mailing
+lists. It cannot drift out of step with what is actually running — but do skim
+it after changing any of the three settings above.
+
 ## Still to do
 
-Two things are stubbed and marked in the code:
-
-1. **Contact form** — `contact.endpoint` is `null`, so the contact section shows
-   a LinkedIn call to action instead of a form that would silently drop messages.
-   Create a free form at [Formspree](https://formspree.io) or
-   [Web3Forms](https://web3forms.com) and paste the endpoint URL. It is a public
-   submission URL, not a secret, so it is fine in the repo.
-2. **Paper figures** — every publication currently renders a designed
-   placeholder. See `src/assets/papers/README.md` before adding real figures;
-   figures from paywalled journals are copyrighted.
+**Paper figures** — 9 of 13 publications have real figures; the remaining four
+(all under review or in preparation) render designed placeholders. See
+`src/assets/papers/README.md` before adding more; figures from paywalled
+journals are copyrighted.
 
 ---
 

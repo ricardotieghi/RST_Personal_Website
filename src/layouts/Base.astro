@@ -7,6 +7,7 @@ import '../styles/tokens.css';
 
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import Analytics from '../components/Analytics.astro';
 import { site, publications } from '../data';
 
 interface Props {
@@ -104,6 +105,8 @@ const articlesSchema = {
       type="application/ld+json"
       set:html={JSON.stringify(articlesSchema)}
     />
+
+    <Analytics />
   </head>
 
   <body>

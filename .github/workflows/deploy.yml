@@ -38,6 +38,9 @@ jobs:
       - name: Build site
         run: npm run build
 
+      - name: Scan output for leaked credentials
+        run: npm run scan
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

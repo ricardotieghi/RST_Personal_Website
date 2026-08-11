@@ -1,0 +1,259 @@
+---
+import { site } from '../data';
+
+/**
+ * Kit subscription form, for gating a free resource behind an email address.
+ *
+ * Drop it anywhere:  <SubscribeForm resource="the AOP knowledge-graph primer" />
+ *
+ * Renders nothing at all until `kit.formAction` is set in site.yaml, so this
+ * can ship before Kit is configured.
+ *
+ * Data never touches this repo — it posts straight to Kit, whose dashboard is
+ * behind their login. The action URL is a public write-only endpoint; it can
+ * add a subscriber but cannot read the list.
+ */
+interface Props {
+  /** What they're signing up to receive. Falls back to the generic blurb. */
+  resource?: string;
+  id?: string;
+}
+
+const { resource, id = 'subscribe' } = Astro.props;
+const action = site.kit.formAction;
+---
+
+{
+  action && (
+    <div class="subscribe">
+      <h3 class="subscribe__heading">{site.kit.heading}</h3>
+      <p class="subscribe__blurb">
+        {resource ? `Enter your details and I'll email you ${resource}.` : site.kit.blurb}
+      </p>
+
+      <form class="subscribe__form" method="POST" action={action} data-subscribe-form>
+        <div class="subscribe__row">
+          <div class="field">
+            <label class="field__label" for={`${id}-name`}>
+              First name
+            </label>
+            <input
+              class="field__input"
+              id={`${id}-name`}
+              name="fields[first_name]"
+              type="text"
+              autocomplete="given-name"
+              required
+            />
+          </div>
+
+          <div class="field">
+            <label class="field__label" for={`${id}-email`}>
+              Email
+            </label>
+            <input
+              class="field__input"
+              id={`${id}-email`}
+              name="email_address"
+              type="email"
+              autocomplete="email"
+              required
+            />
+          </div>
+        </div>
+
+        {/* Unticked by default and required — a pre-ticked box is not consent. */}
+        <div class="consent">
+          <input class="consent__box" id={`${id}-consent`} type="checkbox" required />
+          <label class="consent__label" for={`${id}-consent`}>
+            {site.kit.consentLabel}
+          </label>
+        </div>
+
+        {/* Honeypot — bots fill it, people never see it. */}
+        <div class="field field--trap" aria-hidden="true">
+          <label for={`${id}-website`}>Website</label>
+          <input id={`${id}-website`} name="website" type="text" tabindex="-1" autocomplete="off" />
+        </div>
+
+        <div class="subscribe__actions">
+          <button class="btn btn--primary" type="submit">
+            {site.kit.buttonLabel}
+            <span aria-hidden="true">→</span>
+          </button>
+          <p class="subscribe__note" data-subscribe-status role="status" aria-live="polite" />
+        </div>
+
+        <p class="subscribe__fineprint">
+          One email with the link, then only occasional research updates. Unsubscribe in one
+          click. See the <a href="/privacy">privacy notice</a>.
+        </p>
+      </form>
+    </div>
+  )
+}
+
+<style>
+  .subscribe {
+    padding: var(--space-m);
+    border: 1px solid var(--tan);
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+  }
+
+  .subscribe__heading {
+    font-size: var(--step-2);
+  }
+
+  .subscribe__blurb {
+    margin-block-start: var(--space-2xs);
+    max-width: var(--measure);
+    color: var(--body);
+  }
+
+  .subscribe__form {
+    margin-block-start: var(--space-m);
+    display: grid;
+    gap: var(--space-s);
+  }
+
+  .subscribe__row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+    gap: var(--space-s);
+  }
+
+  .field {
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .field--trap {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+  .field__label {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .field__input {
+    padding: 0.7em 0.85em;
+    border: 1px solid var(--tan-deep);
+    border-radius: var(--radius);
+    background: var(--canvas);
+    color: var(--body);
+    font-size: var(--step-0);
+    transition:
+      border-color 0.15s var(--ease),
+      box-shadow 0.15s var(--ease);
+  }
+
+  .field__input:focus-visible {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--blue-soft) 35%, transparent);
+  }
+
+  .consent {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-2xs);
+  }
+
+  .consent__box {
+    margin-block-start: 0.25em;
+    width: 1.05rem;
+    height: 1.05rem;
+    accent-color: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .consent__label {
+    font-size: 0.9rem;
+    color: var(--body);
+    max-width: var(--measure);
+  }
+
+  .subscribe__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-s);
+  }
+
+  .subscribe__note {
+    font-size: 0.875rem;
+    color: var(--muted);
+  }
+
+  .subscribe__note[data-state='error'] {
+    color: #8a2b1f; /* 6.6:1 on cream */
+  }
+
+  .subscribe__note[data-state='sent'] {
+    color: var(--accent);
+  }
+
+  .subscribe__fineprint {
+    font-size: 0.8125rem;
+    color: var(--muted);
+    max-width: var(--measure);
+  }
+</style>
+
+<script>
+  /* Submits over fetch so the visitor stays on the page. Kit answers with JSON
+     when asked; on any failure the form falls back to a normal POST, which
+     lands on Kit's own confirmation page rather than losing the signup. */
+  document.querySelectorAll<HTMLFormElement>('[data-subscribe-form]').forEach((form) => {
+    const note = form.querySelector<HTMLElement>('[data-subscribe-status]');
+    const button = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+
+    form.addEventListener('submit', async (event) => {
+      if (!note) return;
+      event.preventDefault();
+
+      // Honeypot filled means a bot. Show success and send nothing.
+      const trap = form.querySelector<HTMLInputElement>('input[name="website"]');
+      if (trap?.value) {
+        note.dataset.state = 'sent';
+        note.textContent = 'Thanks — check your inbox.';
+        return;
+      }
+
+      button?.setAttribute('disabled', '');
+      note.dataset.state = '';
+      note.textContent = 'Sending…';
+
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { Accept: 'application/json' },
+        });
+
+        if (!response.ok) throw new Error(String(response.status));
+
+        form.reset();
+        note.dataset.state = 'sent';
+        note.textContent = 'Check your inbox — confirm and the link is on its way.';
+        button?.removeAttribute('disabled');
+      } catch {
+        // Rather than lose the signup, hand it to the browser. form.submit()
+        // does not fire this listener again, so there is no loop.
+        note.dataset.state = '';
+        note.textContent = 'Finishing on Kit…';
+        form.submit();
+      }
+    });
+  });
+</script>

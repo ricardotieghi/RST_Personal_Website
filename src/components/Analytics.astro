@@ -1,0 +1,29 @@
+---
+import { site } from '../data';
+
+/**
+ * Cloudflare Web Analytics beacon.
+ *
+ * Two guards, both deliberate:
+ *  - No token in site.yaml → nothing renders, so the repo is safe to publish
+ *    before analytics is set up.
+ *  - Dev builds → nothing renders, so local work never inflates the numbers.
+ *
+ * The token is a public write-only identifier. It permits sending a pageview;
+ * it cannot read stats back. Cloudflare's beacon sets no cookies and uses no
+ * client-side storage, which is why this site still needs no consent banner —
+ * see /privacy.
+ */
+const token = site.analytics.cloudflareToken;
+const enabled = Boolean(token) && import.meta.env.PROD;
+---
+
+{
+  enabled && (
+    <script
+      defer
+      src="https://static.cloudflareinsights.com/beacon.min.js"
+      data-cf-beacon={JSON.stringify({ token })}
+    />
+  )
+}

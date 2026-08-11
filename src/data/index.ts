@@ -83,6 +83,20 @@ const siteSchema = z.object({
     heading: z.string(),
     blurb: z.string(),
   }),
+  analytics: z.object({
+    // Reject anything that looks like a private key rather than a beacon token.
+    cloudflareToken: z
+      .string()
+      .regex(/^[a-f0-9]{16,64}$/i, 'expected the hex beacon token from the Cloudflare snippet')
+      .nullable(),
+  }),
+  kit: z.object({
+    formAction: z.string().url().nullable(),
+    heading: z.string(),
+    blurb: z.string(),
+    buttonLabel: z.string(),
+    consentLabel: z.string(),
+  }),
   disclaimer: z.string(),
 });
 

@@ -1,0 +1,186 @@
+---
+import Base from '../layouts/Base.astro';
+import BondRule from '../components/BondRule.astro';
+import { site } from '../data';
+
+/**
+ * Plain-language privacy notice. Reads what is actually configured in
+ * site.yaml, so it can never claim to run analytics that are switched off, or
+ * stay silent about a mailing list that is switched on.
+ */
+const analyticsOn = Boolean(site.analytics.cloudflareToken);
+const contactOn = Boolean(site.contact.endpoint);
+const kitOn = Boolean(site.kit.formAction);
+
+const updated = 'August 2026';
+---
+
+<Base
+  title="Privacy"
+  description={`How ricardotieghi.com handles visitor data — what is collected, who processes it, and how to have it removed.`}
+>
+  <article class="section">
+    <div class="wrap-narrow">
+      <p class="eyebrow">
+        <span class="eyebrow__mark" aria-hidden="true">§</span>
+        <span>Privacy</span>
+        <span aria-hidden="true">·</span>
+        <span class="eyebrow__count">Updated {updated}</span>
+      </p>
+
+      <h1 class="privacy__title">What this site knows about you</h1>
+      <BondRule width="9rem" />
+
+      <p class="privacy__lede">
+        This is a personal site. It sells nothing, runs no advertising, and shares nothing
+        with data brokers. The short version: unless you type something into a form here,
+        nothing about you is stored that could identify you.
+      </p>
+
+      <section class="block">
+        <h2>Cookies</h2>
+        <p>
+          This site sets <strong>no cookies</strong> and stores nothing in your browser. There
+          is no consent banner because there is nothing to consent to.
+        </p>
+      </section>
+
+      <section class="block">
+        <h2>Visitor statistics</h2>
+        {
+          analyticsOn ? (
+            <>
+              <p>
+                Aggregate visit counts are measured with Cloudflare Web Analytics, which does
+                not use cookies, does not fingerprint your device, and does not build a
+                profile of you across sites.
+              </p>
+              <p>
+                It records the page you viewed, the site that linked you here, your country,
+                and general device type — as counts, not as records tied to a person. I use it
+                to see which research people actually read. Cloudflare acts as the processor;
+                data is retained for six months.
+              </p>
+            </>
+          ) : (
+            <p>No analytics or visitor tracking is currently running on this site.</p>
+          )
+        }
+      </section>
+
+      {
+        contactOn && (
+          <section class="block">
+            <h2>If you use the contact form</h2>
+            <p>
+              Your name, email address, and message are delivered to me through Formspree,
+              which stores them so I can reply. They are used for nothing else — no list, no
+              marketing, no sharing.
+            </p>
+          </section>
+        )
+      }
+
+      {
+        kitOn && (
+          <section class="block">
+            <h2>If you request a resource</h2>
+            <p>
+              Your first name and email address are stored by Kit, an email service provider,
+              so the resource can be sent to you. You confirm the subscription by email first,
+              so nobody can be added without their say-so.
+            </p>
+            <p>
+              After that you may occasionally hear from me about new research or resources.
+              Every email carries a one-click unsubscribe link, and unsubscribing removes you
+              from the list entirely.
+            </p>
+          </section>
+        )
+      }
+
+      <section class="block">
+        <h2>Who else is involved</h2>
+        <p>
+          The site is hosted on GitHub Pages, so GitHub processes the request logs needed to
+          serve a web page. Fonts are served from this site rather than a font CDN, so no
+          third party sees you loading them.
+        </p>
+        {
+          !analyticsOn && !contactOn && !kitOn && (
+            <p>No other third party receives any information about your visit.</p>
+          )
+        }
+      </section>
+
+      <section class="block">
+        <h2>Removing your data</h2>
+        <p>
+          {
+            kitOn
+              ? 'Unsubscribe from any email to be deleted from the mailing list. '
+              : ''
+          }
+          To have anything else removed — a message you sent me, or any record you think
+          exists — {contactOn ? 'ask via the contact form' : 'reach me on LinkedIn'} and I
+          will delete it. You do not need to give a reason.
+        </p>
+      </section>
+
+      <section class="block">
+        <h2>Changes</h2>
+        <p>
+          If what this site collects changes, this page changes with it. The date at the top
+          reflects the last revision. The page is generated from the site's own configuration,
+          so it cannot drift out of step with what is actually running.
+        </p>
+      </section>
+
+      <p class="privacy__foot">{site.disclaimer}</p>
+
+      <a class="btn btn--secondary privacy__back" href="/">Back to homepage</a>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .privacy__title {
+    margin-block-start: var(--space-s);
+    font-size: var(--step-5);
+  }
+
+  .privacy__lede {
+    margin-block-start: var(--space-m);
+    font-size: var(--step-1);
+    color: var(--body);
+    max-width: var(--measure);
+  }
+
+  .block {
+    margin-block-start: var(--space-xl);
+  }
+
+  .block h2 {
+    font-size: var(--step-2);
+    padding-block-end: var(--space-2xs);
+    border-block-end: 1px solid var(--tan);
+  }
+
+  .block p {
+    margin-block-start: var(--space-s);
+    max-width: var(--measure);
+  }
+
+  .privacy__foot {
+    margin-block-start: var(--space-2xl);
+    padding-block-start: var(--space-m);
+    border-block-start: 1px solid var(--tan);
+    font-size: var(--step--1);
+    color: var(--muted);
+    max-width: var(--measure);
+  }
+
+  .privacy__back {
+    margin-block-start: var(--space-l);
+  }
+</style>
