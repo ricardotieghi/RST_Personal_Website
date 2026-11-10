@@ -2,7 +2,7 @@
 import { Image } from 'astro:assets';
 import Section from './Section.astro';
 import FilterPills from './FilterPills.astro';
-import { timeline, talks, posters } from '../data';
+import { timeline, posters } from '../data';
 
 const photos = import.meta.glob<{ default: ImageMetadata }>(
   '../assets/photos/*.{jpg,jpeg,png,webp}',
@@ -35,10 +35,8 @@ const typeOptions = [
 
 <Section
   id="talks"
-  label="Talks & workshops"
-  title="Where the work gets argued in person."
+  title="Talks & workshops"
   count={timeline.length}
-  lede={`${talks.length} invited talks and ${posters.length} conference posters, from Salt Lake City to Rio de Janeiro. Two continuing-education courses are already booked for 2026 and 2027.`}
   band
 >
   <div class="talks__controls" data-filter-group="talks" data-filter-mode="and">

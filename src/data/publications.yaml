@@ -7,6 +7,8 @@
 # featured: true      shows the entry in the Featured Research grid (pick 4)
 # authors:  put `**` around your own name — it renders bold automatically
 # image:    filename in src/assets/papers/. Leave null for a designed placeholder.
+# scholarId: the paper's id on Google Scholar (`npm run scholar -- --list`).
+#           With it set, `citations` is refreshed automatically every week.
 # ---------------------------------------------------------------------------
 
 - id: nejm-ai-nams
@@ -18,7 +20,8 @@
   year: 2025
   status: published
   url: https://ai.nejm.org/doi/full/10.1056/Aipc2500587
-  citations: 11
+  scholarId: YsMSGLbcyi4C
+  citations: 14
   topics: [policy]
   featured: true
   image: nejm-ai-nams.jpg
@@ -35,7 +38,8 @@
   year: 2024
   status: published
   url: https://doi.org/10.3390/toxics12110803
-  citations: 10
+  scholarId: d1gkVwhDpl0C
+  citations: 13
   topics: [ml, tools]
   featured: true
   image: husspred-toxics.webp
@@ -53,20 +57,22 @@
   year: 2026
   status: published
   url: https://doi.org/10.1021/EHP.6c01149
-  citations: 4
+  scholarId: 2osOgNQ5qMEC
+  citations: 7
   topics: [ml, tools]
   featured: true
   image: detox-ehp.png
 
 - id: stoptox-validation
   title: >-
-    External Validation of STopTox as an in Silico Alternative to Animal
-    Toxicity Testing
+    External Validation of STopTox – Novel Alternative Method (NAM) for Acute
+    Systemic and Topical Toxicity
   authors: '**R. S. Tieghi**, et al.'
   venue: Environmental Health Perspectives
   year: 2025
   status: published
   url: https://pubmed.ncbi.nlm.nih.gov/40393008/
+  scholarId: qjMakFHDy7sC
   citations: 3
   impactFactor: '10.1'
   topics: [ml, tools]
@@ -82,7 +88,8 @@
   year: 2025
   status: published
   url: https://doi.org/10.1002/wcms.70047
-  citations: 9
+  scholarId: zYLM7Y9cAGgC
+  citations: 11
   topics: [ai, tools]
   image: knime-llm-extraction.jpg
 
@@ -95,6 +102,7 @@
   year: 2025
   status: published
   url: https://doi.org/10.1016/B978-0-443-29808-0.00066-2
+  scholarId: Y0pCki6q_DkC
   coFirst: true
   topics: [reviews, ai]
   image: medchem-deep-learning.png
@@ -106,7 +114,8 @@
   year: 2025
   status: published
   url: https://doi.org/10.1093/toxsci/kfaf110
-  citations: 7
+  scholarId: IjCSPb-OGe4C
+  citations: 9
   impactFactor: '4.1'
   topics: [ml]
   image: pfas-liver.jpg
@@ -117,9 +126,10 @@
     and Automated Computational Workflows
   authors: 'K. Mansouri, J. T. Moreira-Filho, **R. S. Tieghi**, N. Kleinstreuer'
   venue: ACS Chemical Research in Toxicology
-  year: 2025
+  year: 2026
   status: published
   url: https://doi.org/10.1021/acs.chemrestox.6c00093
+  scholarId: ufrVoPGSRksC
   topics: [ai, reviews]
   image: democratizing-ai-tox.png
 
@@ -169,6 +179,7 @@
   year: 2025
   status: preprint
   url: https://doi.org/10.1101/2025.01.17.633658
+  scholarId: 9yKSN-GCB0IC
   citations: 4
   topics: [ml]
   image: breaking-the-phalanx.jpg

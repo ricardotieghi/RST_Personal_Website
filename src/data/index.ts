@@ -38,7 +38,7 @@ const siteSchema = z.object({
   initials: z.string(),
   pronouns: z.string(),
   role: z.string(),
-  roleDetail: z.string(),
+  employer: z.string(),
   location: z.string(),
   tagline: z.string(),
   rotating: z.array(z.string()).min(1),
@@ -58,7 +58,7 @@ const siteSchema = z.object({
       title: z.string(),
       period: z.string(),
       supervisor: z.string().optional(),
-      points: z.array(z.string()),
+      points: z.array(z.string()).default([]),
     })
   ),
   service: z.array(
@@ -112,6 +112,9 @@ const publicationSchema = z.object({
   status: z.enum(PUB_STATUS),
   url: z.string().url().optional(),
   citations: z.number().int().nonnegative().optional(),
+  /** The paper's id on the Scholar profile (`citation_for_view=…`); lets
+   *  `npm run scholar` keep `citations` current. */
+  scholarId: z.string().optional(),
   impactFactor: z.string().optional(),
   topics: z.array(z.enum(PUB_TOPICS)).min(1),
   featured: z.boolean().optional(),

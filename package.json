@@ -13,7 +13,8 @@
     "images": "node scripts/prepare-images.mjs",
     "papers": "node scripts/prepare-papers.mjs",
     "contrast": "node scripts/check-contrast.mjs",
-    "scan": "node scripts/scan-secrets.mjs"
+    "scan": "node scripts/scan-secrets.mjs",
+    "scholar": "node scripts/update-scholar.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.2.1",

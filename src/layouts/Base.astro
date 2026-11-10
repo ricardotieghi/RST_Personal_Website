@@ -32,7 +32,7 @@ const personSchema = {
   image: ogImage,
   jobTitle: site.role,
   description: site.tagline,
-  worksFor: { '@type': 'Organization', name: 'Guidehouse' },
+  worksFor: { '@type': 'Organization', name: site.employer },
   alumniOf: {
     '@type': 'CollegeOrUniversity',
     name: 'University of North Carolina at Chapel Hill',

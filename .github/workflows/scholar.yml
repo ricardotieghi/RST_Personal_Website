@@ -1,0 +1,55 @@
+name: Refresh Google Scholar metrics
+
+# Reads the public Scholar profile, updates src/data/stats.yaml and each
+# paper's `citations:` in publications.yaml, commits if anything changed, and
+# redeploys. If Scholar blocks the request the job fails and nothing changes —
+# the site keeps the last good numbers.
+on:
+  schedule:
+    - cron: '17 13 * * 1' # Mondays, 13:17 UTC
+  # Lets you run it now from the Actions tab.
+  workflow_dispatch:
+
+permissions:
+  contents: write # commit the refreshed YAML
+  actions: write # start the deploy workflow
+
+concurrency:
+  group: scholar
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Fetch Scholar metrics
+        run: npm run scholar
+
+      - name: Commit and redeploy if anything changed
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git add src/data/stats.yaml src/data/publications.yaml
+          if git diff --cached --quiet; then
+            echo "No changes."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Refresh Google Scholar metrics"
+          git push
+          # A push made with GITHUB_TOKEN does not trigger the push-based
+          # deploy, but an explicit dispatch does.
+          gh workflow run deploy.yml --ref "${GITHUB_REF_NAME}"

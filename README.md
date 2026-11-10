@@ -23,6 +23,7 @@ npm run dev        # http://localhost:4321
 | `npm run contrast` | Check every text colour against WCAG AA. CI runs this too. |
 | `npm run scan` | Fail if any credential leaked into `dist/`. CI runs this too. |
 | `npm run images` | Re-process photos from `img/` into `src/assets/photos/` |
+| `npm run scholar` | Pull the latest Google Scholar metrics into `src/data/` |
 
 ---
 
@@ -38,9 +39,9 @@ lives in `src/data/` as YAML:
 | `talks.yaml` | Invited talks and conference posters |
 | `awards.yaml` | Awards and honors |
 | `news.yaml` | Press coverage |
-| `stats.yaml` | Google Scholar metrics (entered by hand) |
+| `stats.yaml` | Google Scholar metrics (refreshed weekly by a GitHub Action) |
 
-Counts shown on the page — "8 peer-reviewed", "n=13", the filter pill numbers —
+Counts shown on the page — "8 peer-reviewed", the count beside each section heading, the filter pill numbers —
 are all **counted from these files at build time**. Add a publication and every
 number updates itself.
 
@@ -60,18 +61,28 @@ shipping a broken page.
   url: https://doi.org/...
   citations: 0
   topics: [ml, tools]      # policy | ml | ai | tools | reviews
+  scholarId: YsMSGLbcyi4C  # optional — keeps `citations` current (see below)
   featured: true           # optional — shows in the Featured Research grid
   image: figure.jpg        # optional — file in src/assets/papers/
 ```
 
 Only `status: published` counts toward the "peer-reviewed" stat.
 
-### Updating Scholar metrics
+### Scholar metrics update themselves
 
-Google Scholar has no API, so `citations`, `hIndex`, and `i10Index` in
-`stats.yaml` are typed in by hand. Check
-[the profile](https://scholar.google.com/citations?user=iEROevEAAAAJ) every few
-months and update `updated:` when you do — that date renders under the stats.
+Every Monday, `.github/workflows/scholar.yml` reads
+[the public profile](https://scholar.google.com/citations?user=iEROevEAAAAJ),
+updates `citations`, `hIndex`, `i10Index` and `updated` in `stats.yaml` plus the
+`citations` of every publication that has a `scholarId`, commits the change, and
+redeploys. You can also run it from the Actions tab, or locally with
+`npm run scholar` (`-- --dry-run` to preview).
+
+Google Scholar has no API, so this reads the page. If Scholar blocks the request
+(it occasionally rate-limits cloud servers) the run fails, nothing changes, and
+the site keeps the last numbers — re-run it, or run `npm run scholar` at home.
+
+**New paper?** Run `npm run scholar -- --list` to see each paper's Scholar id,
+then add it to the entry as `scholarId:`.
 
 ### Adding photos
 

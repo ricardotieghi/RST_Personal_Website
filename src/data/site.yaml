@@ -7,10 +7,11 @@ shortName: Ricardo S. Tieghi
 initials: RST
 pronouns: he/him
 
-# The role line under the name in the hero.
-role: Program Analyst, Guidehouse
-roleDetail: supporting the Office of the NIH Director
-location: Durham, North Carolina
+# The role line under the name in the hero, footer, and CV, and the employer
+# named in the search-engine data.
+role: Research Engineer
+employer: Human Chemical Company
+location: Washington, D.C.
 
 # Shown in the browser tab and search results.
 tagline: Computational toxicology, machine learning, and AI policy for biomedical research.
@@ -32,12 +33,13 @@ about:
     toxicity from structure, so that questions once answered with animal tests can
     be answered computationally instead.
   - >-
-    At NIH I support the Office of the Director on AI strategy: co-leading the $5M
-    AI and Biomedical Foundation Model Challenge, running portfolio analysis for
-    the $1.2B Bio Genesis Mission, and co-authoring the NIH AI Strategic Plan for
-    2026 to 2029. Before that I spent two years at NIEHS in the NICEATM group and
-    two years in the UNC Molecular Modeling Lab, where our work drew more than
-    $1.8M in project funding.
+    I'm a research engineer at Human Chemical Company in Washington, D.C. Before
+    that I supported the Office of the NIH Director on AI strategy: I co-led the
+    $5M AI and Biomedical Foundation Model Challenge, ran portfolio analysis for
+    the $1.2B Bio Genesis Mission, and co-authored the NIH AI Strategic Plan for
+    2026 to 2029. Earlier I spent two years at NIEHS in the NICEATM group and two
+    years in the UNC Molecular Modeling Lab, where our work drew more than $1.8M
+    in project funding.
   - >-
     I graduated from UNC-Chapel Hill in 2025 with a BS in Biology and minors in
     Chemistry and Medical Anthropology, and I review for ACS Chemical Research in
@@ -53,17 +55,22 @@ education:
 # Experience (used on the /cv page)
 # ---------------------------------------------------------------------------
 experience:
+  - org: Human Chemical Company
+    orgDetail: Washington, D.C.
+    title: Research Engineer
+    period: Nov 2026 – Present
+
   - org: National Institutes of Health — Office of the NIH Director
     orgDetail: via Guidehouse · Bethesda, MD
     title: Program Analyst
-    period: Jun 2025 – Present
+    period: Jun 2025 – Oct 2026
     points:
       - Authored a publication with the FDA Commissioner, the FDA CDER Director, and the NIH Deputy Director on alternatives to animal testing in preclinical research, in NEJM AI.
       - Co-led development of the $5M AI and Biomedical Foundation Model Challenge.
       - Led portfolio analysis for the Bio Genesis Mission, a $1.2B initiative from NIH's Chief AI Office.
       - Co-authored and supported development of the NIH AI Strategic Plan (2026–2029).
       - Built a multi-agent dashboard for the multimodal-AI award program using LLMs and MCP servers, cutting award-management time by roughly 50% in six months.
-      - Deployed a portfolio analysis agent now serving six NIH Institutes and Centers, used for 15+ analyses for NIH leadership.
+      - Deployed a portfolio analysis agent that served six NIH Institutes and Centers and supported 15+ analyses for NIH leadership.
       - Delivered three portfolio analyses under compressed deadlines for congressional House Appropriations, analyzing 1,900+ grants with custom agentic AI pipelines.
 
   - org: Human Chemical Company
@@ -133,7 +140,7 @@ cv:
   # download button and viewer if it does not. The Word original it is exported
   # from is gitignored — keep it out of the repo.
   file: /cv/Ricardo-Scheufen-Tieghi-CV.pdf
-  updated: August 2026
+  updated: November 2026
 
 # ---------------------------------------------------------------------------
 # Contact form.
@@ -146,7 +153,7 @@ cv:
 # ---------------------------------------------------------------------------
 contact:
   endpoint: null
-  heading: Get in touch
+  heading: Contact
   blurb: >-
     I'm always glad to talk about computational toxicology, new approach
     methodologies, or AI in federal biomedical research.
@@ -196,5 +203,5 @@ kit:
 # Required on a site that describes federal contract work.
 # ---------------------------------------------------------------------------
 disclaimer: >-
-  Views expressed on this site are my own and do not represent the National
-  Institutes of Health, the Department of Health and Human Services, or Guidehouse.
+  Views expressed on this site are my own and do not represent Human Chemical
+  Company, the National Institutes of Health, or any current or former employer.

@@ -1,13 +1,14 @@
 # ---------------------------------------------------------------------------
-# Google Scholar does not offer an API, so these three numbers are entered by
-# hand. Check https://scholar.google.com/citations?user=iEROevEAAAAJ every few
-# months and update `updated` when you do — the date renders under the stats.
+# Google Scholar metrics. Refreshed every Monday by
+# .github/workflows/scholar.yml, which reads the public profile and commits any
+# change. To refresh by hand: `npm run scholar`. `updated` renders under the
+# stats and is set to the month of the last check.
 # ---------------------------------------------------------------------------
 
-citations: 55
-hIndex: 4
-i10Index: 2
-updated: August 2026
+citations: 68
+hIndex: 5
+i10Index: 3
+updated: November 2026
 scholarUrl: https://scholar.google.com/citations?user=iEROevEAAAAJ&hl=en
 
 # Every other number on the page (publications, awards, talks, posters) is

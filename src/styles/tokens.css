@@ -291,12 +291,6 @@ strong {
   margin-block-end: var(--space-xl);
 }
 
-.section__lede {
-  max-width: var(--measure);
-  font-size: var(--step-1);
-  color: var(--body);
-}
-
 /* =========================================================================
    Bond-line divider — the signature.
 

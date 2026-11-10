@@ -49,7 +49,7 @@ const hasPdf = existsSync(resolve(process.cwd(), 'public', site.cv.file.replace(
         <BondRule width="9rem" />
 
         <p class="cv__role">
-          <strong>{site.role}</strong> — {site.roleDetail}
+          <strong>{site.role}</strong> — {site.employer}
         </p>
         <p class="cv__where">{site.location} · {site.pronouns}</p>
 
@@ -102,11 +102,13 @@ const hasPdf = existsSync(resolve(process.cwd(), 'public', site.cv.file.replace(
               <p class="entry__sub">{job.title}</p>
               {job.orgDetail && <p class="entry__detail">{job.orgDetail}</p>}
               {job.supervisor && <p class="entry__detail">Supervisor: {job.supervisor}</p>}
-              <ul class="entry__points">
-                {job.points.map((point) => (
-                  <li>{point}</li>
-                ))}
-              </ul>
+              {job.points.length > 0 && (
+                <ul class="entry__points">
+                  {job.points.map((point) => (
+                    <li>{point}</li>
+                  ))}
+                </ul>
+              )}
             </div>
           ))
         }

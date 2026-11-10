@@ -2,46 +2,59 @@
 import BondRule from './BondRule.astro';
 
 /**
- * Shared section shell. The eyebrow carries an item count so a reader knows
- * how long a list is before scrolling it — `§ PUBLICATIONS · n=13`.
+ * Shared section shell. The heading is the plain section name; an optional
+ * item count sits beside it so a reader knows how long a list is before
+ * scrolling it — `Publications 13`.
  */
 interface Props {
   id: string;
-  label: string;
   title: string;
   count?: number;
-  lede?: string;
   band?: boolean;
   narrow?: boolean;
 }
 
-const { id, label, title, count, lede, band = false, narrow = false } = Astro.props;
+const { id, title, count, band = false, narrow = false } = Astro.props;
 ---
 
 <section id={id} class:list={['section', { 'section--band': band }]}>
   <div class:list={[narrow ? 'wrap-narrow' : 'wrap']}>
     <div class="section__head">
-      <p class="eyebrow">
-        <span class="eyebrow__mark" aria-hidden="true">§</span>
-        <span>{label}</span>
+      <h2 class="section__title">
+        {title}
         {
           count !== undefined && (
-            <>
-              <span aria-hidden="true">·</span>
-              <span class="eyebrow__count">n={count}</span>
-            </>
+            <span class="section__count">
+              <span class="visually-hidden">, </span>
+              {count}
+              <span class="visually-hidden"> {count === 1 ? 'item' : 'items'}</span>
+            </span>
           )
         }
-      </p>
-      <h2>{title}</h2>
+      </h2>
       <BondRule class="section__rule" />
-      {lede && <p class="section__lede">{lede}</p>}
     </div>
     <slot />
   </div>
 </section>
 
 <style>
+  .section__title {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.6em;
+  }
+
+  .section__count {
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+
   .section__rule {
     margin-block-start: 0.35rem;
   }
