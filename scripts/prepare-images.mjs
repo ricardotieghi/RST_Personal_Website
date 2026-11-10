@@ -36,6 +36,13 @@ const MAP = {
   'Presentation NSCP Fall Connection.jpg': 'nscp-fall-connection.jpg',
   'Poster Presentaiotn 1 NCSOT.jpg': 'ncsot-poster-1.jpg',
   'Poster Presentation 2 NCSOT.jpg': 'ncsot-poster-2.jpg',
+  'SOT 2025 Undergraduate Research Award.HEIC': 'sot-2025-undergrad-award.jpg',
+  'NCSOT 2024 Award.jpg': 'ncsot-2024-award.jpg',
+  'NCSOT 2024 Poster.jpg': 'ncsot-2024-poster.jpg',
+  'SURF 2024 Poster.HEIC': 'surf-2024-poster.jpg',
+  'BDRP 2025 Award.HEIC': 'bdrp-2025-award.jpg',
+  'BDRP 2025 Presentation.HEIC': 'bdrp-2025-presentation.jpg',
+  'GW Law 2025 Talk.jpg': 'gw-law-2025-talk.jpg',
 };
 
 mkdirSync(OUT, { recursive: true });

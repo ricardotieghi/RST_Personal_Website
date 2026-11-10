@@ -1,0 +1,140 @@
+---
+/**
+ * One shared dialog that shows any <Photo> at full size. Included once in
+ * Base.astro. Click anywhere or press Escape to close.
+ */
+---
+
+<dialog class="lightbox" data-lightbox aria-label="Enlarged photo">
+  <figure class="lightbox__figure">
+    <img class="lightbox__img" alt="" data-lightbox-img />
+    <figcaption class="lightbox__caption" data-lightbox-caption></figcaption>
+  </figure>
+  <button class="lightbox__close" type="button" data-lightbox-close>
+    <span aria-hidden="true">×</span>
+    <span class="visually-hidden">Close</span>
+  </button>
+</dialog>
+
+<style>
+  .lightbox {
+    width: 100vw;
+    height: 100dvh;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    padding: clamp(1rem, 4vw, 3rem);
+    border: 0;
+    background: transparent;
+    cursor: zoom-out;
+  }
+
+  .lightbox[open] {
+    display: grid;
+    place-items: center;
+  }
+
+  .lightbox::backdrop {
+    background: rgb(0 20 32 / 0.88);
+  }
+
+  .lightbox__figure {
+    display: grid;
+    justify-items: center;
+    gap: 0.75rem;
+    max-width: 100%;
+    max-height: 100%;
+    margin: 0;
+  }
+
+  .lightbox__img {
+    max-width: min(100%, 90rem);
+    max-height: calc(100dvh - 7rem);
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: var(--radius);
+    box-shadow: 0 1.5rem 4rem rgb(0 0 0 / 0.45);
+  }
+
+  .lightbox__caption {
+    max-width: 60ch;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+    line-height: 1.5;
+    color: #f3ede4;
+    text-align: center;
+  }
+
+  .lightbox__close {
+    position: fixed;
+    inset-block-start: 0.75rem;
+    inset-inline-end: 0.75rem;
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border: 1px solid rgb(255 255 255 / 0.35);
+    border-radius: 999px;
+    background: rgb(0 0 0 / 0.35);
+    color: #fff;
+    font-size: 1.6rem;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  .lightbox__close:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+  }
+
+  :global(html:has(.lightbox[open])) {
+    overflow: hidden;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .lightbox[open] .lightbox__figure {
+      animation: lightbox-in 0.22s var(--ease);
+    }
+  }
+
+  @keyframes lightbox-in {
+    from {
+      opacity: 0;
+      transform: scale(0.97);
+    }
+  }
+</style>
+
+<script>
+  const dialog = document.querySelector<HTMLDialogElement>('[data-lightbox]');
+  const img = dialog?.querySelector<HTMLImageElement>('[data-lightbox-img]');
+  const caption = dialog?.querySelector<HTMLElement>('[data-lightbox-caption]');
+
+  if (dialog && img && caption && typeof dialog.showModal === 'function') {
+    document.addEventListener('click', (event) => {
+      const link = (event.target as Element | null)?.closest<HTMLAnchorElement>('a[data-zoom]');
+      // Let modified clicks (new tab, etc.) behave like a normal link.
+      if (!link || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+        return;
+      }
+      event.preventDefault();
+
+      img.src = link.href;
+      img.alt = link.querySelector('img')?.alt ?? '';
+      if (link.dataset.zoomWidth) img.width = Number(link.dataset.zoomWidth);
+      if (link.dataset.zoomHeight) img.height = Number(link.dataset.zoomHeight);
+      caption.textContent = link.dataset.zoomCaption ?? '';
+      dialog.showModal();
+    });
+
+    // Any click inside the open dialog — on the photo, the backdrop, or the
+    // close button — dismisses it. Escape is handled by <dialog> itself.
+    dialog.addEventListener('click', () => dialog.close());
+
+    dialog.addEventListener('close', () => {
+      img.removeAttribute('src');
+    });
+  }
+</script>

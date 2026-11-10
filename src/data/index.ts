@@ -126,6 +126,12 @@ const publicationSchema = z.object({
 
 const TALK_KINDS = ['talk', 'workshop', 'webinar', 'poster'] as const;
 
+/** A photo in src/assets/photos/: a bare filename, or { file, alt }. */
+const photoSchema = z.union([
+  z.string().transform((file): { file: string; alt?: string } => ({ file })),
+  z.object({ file: z.string(), alt: z.string().optional() }),
+]);
+
 const talkSchema = z.object({
   id: z.string(),
   title: z.string(),
@@ -138,7 +144,7 @@ const talkSchema = z.object({
   award: z.string().optional(),
   url: z.string().url().optional(),
   urlLabel: z.string().optional(),
-  image: z.string().nullable().optional(),
+  images: z.array(photoSchema).default([]),
 });
 
 const awardSchema = z.object({

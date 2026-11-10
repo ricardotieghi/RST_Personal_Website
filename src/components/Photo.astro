@@ -1,0 +1,98 @@
+---
+import { Image, getImage } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+/**
+ * A photo that enlarges when clicked.
+ *
+ * It renders as a link to a large copy of the image, so without JavaScript a
+ * click simply opens the full photo. With JavaScript, Lightbox.astro catches
+ * the click and shows it in a dialog instead.
+ *
+ * Extra attributes (including the parent's style scope) land on the <a>, so a
+ * parent can size it with its own class. The <img> inside is reached with
+ * `.your-class :global(img)`.
+ */
+interface Props {
+  src: ImageMetadata;
+  alt: string;
+  caption?: string;
+  widths: number[];
+  sizes: string;
+  loading?: 'lazy' | 'eager';
+  [attr: string]: unknown;
+}
+
+const { src, alt, caption, widths, sizes, loading = 'lazy', class: className, ...rest } =
+  Astro.props;
+
+const full = await getImage({
+  src,
+  width: Math.min(src.width, 2000),
+  format: 'webp',
+  quality: 82,
+});
+---
+
+<a
+  class:list={['photo', className]}
+  href={full.src}
+  data-zoom
+  data-zoom-caption={caption ?? alt}
+  data-zoom-width={full.attributes.width}
+  data-zoom-height={full.attributes.height}
+  {...rest}
+>
+  <Image src={src} alt={alt} widths={widths} sizes={sizes} loading={loading} />
+  <span class="photo__hint" aria-hidden="true">
+    <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6">
+      <path d="M9.5 2.5h4v4M6.5 13.5h-4v-4M13.5 2.5 9 7M2.5 13.5 7 9" />
+    </svg>
+  </span>
+  <span class="visually-hidden">(enlarge photo)</span>
+</a>
+
+<style>
+  .photo {
+    position: relative;
+    display: block;
+    cursor: zoom-in;
+    border-radius: var(--radius);
+    line-height: 0;
+  }
+
+  .photo :global(img) {
+    display: block;
+    transition: filter 0.2s var(--ease);
+  }
+
+  .photo:hover :global(img) {
+    filter: brightness(1.04) saturate(1.05);
+  }
+
+  .photo:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  /* A small corner badge that says "this enlarges". */
+  .photo__hint {
+    position: absolute;
+    inset-block-end: 0.4rem;
+    inset-inline-end: 0.4rem;
+    display: grid;
+    place-items: center;
+    width: 1.6rem;
+    height: 1.6rem;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--ink) 72%, transparent);
+    color: #fff;
+    opacity: 0.85;
+    transition: opacity 0.2s var(--ease);
+  }
+
+  .photo:hover .photo__hint,
+  .photo:focus-visible .photo__hint {
+    opacity: 1;
+  }
+</style>

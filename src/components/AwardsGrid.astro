@@ -1,8 +1,8 @@
 ---
-import { Image } from 'astro:assets';
+import Photo from './Photo.astro';
 import Section from './Section.astro';
 import chancellor from '../assets/photos/chancellor-award.jpg';
-import sotAward from '../assets/photos/sot-2025-award.jpg';
+import sotAward from '../assets/photos/sot-2025-undergrad-award.jpg';
 import { awardGroups, awards } from '../data';
 ---
 
@@ -51,22 +51,22 @@ import { awardGroups, awards } from '../data';
 
   <div class="awards__photos">
     <figure>
-      <Image
+      <Photo
         src={sotAward}
-        alt="Receiving the SOT Undergraduate Research Award at the SOT 64th Annual Meeting in Orlando"
-        widths={[320, 520]}
-        sizes="(max-width: 45rem) 90vw, 22rem"
-        loading="lazy"
+        alt="Ricardo and a fellow UNC student holding their SOT Undergraduate Research Award plaques at the SOT 64th Annual Meeting in Orlando"
+        caption="SOT Undergraduate Research Award · Orlando, March 2025"
+        widths={[360, 560, 800]}
+        sizes="(max-width: 45rem) 90vw, 30rem"
       />
       <figcaption>SOT Undergraduate Research Award · Orlando, March 2025</figcaption>
     </figure>
     <figure>
-      <Image
+      <Photo
         src={chancellor}
         alt="Receiving the UNC Chancellor's Walter S. Spearman Award"
-        widths={[320, 520]}
-        sizes="(max-width: 45rem) 90vw, 22rem"
-        loading="lazy"
+        caption="UNC Chancellor's Awards · Chapel Hill, 2025"
+        widths={[360, 560, 800]}
+        sizes="(max-width: 45rem) 90vw, 30rem"
       />
       <figcaption>UNC Chancellor's Awards · Chapel Hill, 2025</figcaption>
     </figure>
@@ -175,11 +175,14 @@ import { awardGroups, awards } from '../data';
     gap: var(--space-m);
   }
 
-  .awards__photos img {
+  .awards__photos {
+    align-items: start;
+  }
+
+  /* Natural shape, no cropping; click to enlarge (see Photo.astro). */
+  .awards__photos :global(img) {
     width: 100%;
     height: auto;
-    aspect-ratio: 3 / 2;
-    object-fit: cover;
     border-radius: var(--radius);
     border: 1px solid var(--tan);
   }

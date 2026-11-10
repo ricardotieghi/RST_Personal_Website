@@ -1,5 +1,5 @@
 ---
-import { Image } from 'astro:assets';
+import Photo from './Photo.astro';
 import Section from './Section.astro';
 import FilterPills from './FilterPills.astro';
 import { timeline, posters } from '../data';
@@ -55,7 +55,12 @@ const typeOptions = [
   <ol class="timeline" data-filter-items="talks">
     {
       timeline.map((item) => {
-        const photo = item.image ? photos[`../assets/photos/${item.image}`] : undefined;
+        // Fail the build on a typo rather than silently dropping a photo.
+        const itemPhotos = item.images.map(({ file, alt }) => {
+          const mod = photos[`../assets/photos/${file}`];
+          if (!mod) throw new Error(`talks.yaml (${item.id}): no photo src/assets/photos/${file}`);
+          return { src: mod.default, alt: alt ?? `${item.event}, ${item.location}` };
+        });
         return (
           <li
             class="event"
@@ -97,15 +102,19 @@ const typeOptions = [
               )}
             </div>
 
-            {photo && (
-              <Image
-                src={photo.default}
-                alt={`${item.event}, ${item.location}`}
-                widths={[180, 320]}
-                sizes="9rem"
-                loading="lazy"
-                class="event__photo"
-              />
+            {itemPhotos.length > 0 && (
+              <div class="event__photos">
+                {itemPhotos.map((photo) => (
+                  <Photo
+                    src={photo.src}
+                    alt={photo.alt}
+                    caption={`${photo.alt} · ${item.dateLabel}`}
+                    widths={[240, 400, 640]}
+                    sizes="(max-width: 55rem) 70vw, 15rem"
+                    class="event__photo"
+                  />
+                ))}
+              </div>
             )}
           </li>
         );
@@ -236,12 +245,24 @@ const typeOptions = [
     border-block-end-color: var(--accent);
   }
 
-  .event__photo {
-    width: 9rem;
-    height: 6rem;
-    object-fit: cover;
-    border-radius: 2px;
+  /* Photos keep their own shape — a fixed height and natural width — so a
+     portrait shot is never centre-cropped into a landscape box. */
+  .event__photos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: var(--space-2xs);
+    max-width: 22rem;
+  }
+
+  .event__photo :global(img) {
+    width: auto;
+    height: auto;
+    max-width: 15rem;
+    max-height: 10rem;
+    border-radius: var(--radius);
     border: 1px solid var(--tan);
+    box-shadow: 0 1px 2px rgb(0 48 73 / 0.06), 0 6px 16px -8px rgb(0 48 73 / 0.25);
   }
 
   .talks__empty {
@@ -270,12 +291,16 @@ const typeOptions = [
       grid-area: body;
       margin-block-start: 0.4rem;
     }
-    .event__photo {
+    .event__photos {
       grid-area: photo;
+      justify-content: flex-start;
+      max-width: none;
       margin-block-start: var(--space-2xs);
-      width: 100%;
-      max-width: 14rem;
-      height: 8rem;
+    }
+
+    .event__photo :global(img) {
+      max-width: 100%;
+      max-height: 12rem;
     }
 
     .event__dot {

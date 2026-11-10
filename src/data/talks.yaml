@@ -5,7 +5,9 @@
 # date:  ISO date used only for sorting. Use the 1st when only a month is known.
 # dateLabel: what actually renders.
 # url:   recording or listing, if one exists.
-# image: filename in src/assets/photos/, or null.
+# images: photos in src/assets/photos/, shown beside the entry and enlarged on
+#        click. Each is a filename, or { file, alt } to describe that photo
+#        (otherwise the alt text is the event and location).
 # ---------------------------------------------------------------------------
 
 - id: sot-66-ce-course
@@ -43,6 +45,9 @@
   kind: talk
   url: https://www.youtube.com/watch?v=BE8sue7kJOs&t=1488s
   urlLabel: Watch recording
+  images:
+    - file: gw-law-2025-talk.jpg
+      alt: Ricardo presenting on replacing animal testing at George Washington University Law School
 
 - id: ascct-2025-ce-course
   title: >-
@@ -61,7 +66,7 @@
   dateLabel: August 2025
   kind: talk
   award: Early Career Best Oral Presentation
-  image: wc13-panel.webp
+  images: [wc13-panel.webp]
 
 - id: bdrp-2025
   title: Innovator Award Finalist presentation
@@ -71,6 +76,11 @@
   dateLabel: June 2025
   kind: talk
   award: BDRP Innovator Award Finalist
+  images:
+    - file: bdrp-2025-award.jpg
+      alt: Ricardo receiving the BDRP Innovator Award certificate in Denver
+    - file: bdrp-2025-presentation.jpg
+      alt: Ricardo with colleagues at the BDRP 65th Annual Meeting in Denver
 
 - id: dtt-science-forum
   title: Division of Translational Toxicology Science Forum
@@ -87,7 +97,7 @@
   date: 2025-04-01
   dateLabel: April 2025
   kind: talk
-  image: nscp-award.jpg
+  images: [nscp-award.jpg]
 
 - id: sot-64-symposium
   title: Symposium Speaker & Co-Chair
@@ -96,7 +106,7 @@
   date: 2025-03-01
   dateLabel: March 2025
   kind: talk
-  image: sot-2025-award.jpg
+  images: [sot-2025-award.jpg]
 
 - id: ascct-estiv-webinar
   title: ASCCT–ESTIV Award Winners Webinar
@@ -116,7 +126,7 @@
   dateLabel: November 2024
   kind: talk
   award: 1st Prize
-  image: nscp-fall-connection.jpg
+  images: [nscp-fall-connection.jpg]
 
 - id: ascct-2024-flash
   title: Flash Talk
@@ -126,7 +136,7 @@
   dateLabel: October 2024
   kind: talk
   award: Suzanne Fitzpatrick Award
-  image: ascct-award.jpg
+  images: [ascct-award.jpg]
 
 # ---- posters --------------------------------------------------------------
 
@@ -140,7 +150,7 @@
   dateLabel: March 2025
   kind: poster
   award: SOT Undergraduate Research Award
-  image: sot-2025-poster-award.jpg
+  images: [sot-2025-poster-award.jpg]
 
 - id: poster-ascct-13
   title: >-
@@ -162,7 +172,11 @@
   dateLabel: September 2024
   kind: poster
   award: 1st Prize
-  image: ncsot-poster-1.jpg
+  images:
+    - file: ncsot-2024-award.jpg
+      alt: Ricardo called on stage for the NCSOT undergraduate poster award
+    - file: ncsot-2024-poster.jpg
+      alt: Ricardo discussing the HuSSPred poster at the NCSOT Annual Meeting
 
 - id: poster-unc-cur
   title: >-
@@ -174,6 +188,9 @@
   dateLabel: May 2024
   kind: poster
   award: SURF Award
+  images:
+    - file: surf-2024-poster.jpg
+      alt: Ricardo with the endothelial-cell poster at the UNC Celebration of Undergraduate Research
 
 - id: poster-sot-63
   title: >-
@@ -185,4 +202,4 @@
   dateLabel: March 2024
   kind: poster
   award: BMSS Abstract Award Finalist
-  image: sot-2024.jpg
+  images: [sot-2024.jpg]

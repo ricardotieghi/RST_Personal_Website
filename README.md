@@ -90,6 +90,12 @@ Drop them in `img/`, add a line to the `MAP` in `scripts/prepare-images.mjs`,
 then run `npm run images`. HEIC files are converted automatically (macOS only —
 CI never runs this script, it uses the committed output in `src/assets/photos/`).
 
+To show photos on a talk or poster, list them under `images:` in `talks.yaml`
+(one or more; add `alt:` to describe each). Photos keep their own shape — they
+are never cropped — and every photo on the site enlarges when clicked
+(`src/components/Photo.astro` + `Lightbox.astro`). A filename that doesn't exist
+fails the build.
+
 ---
 
 ## The CV

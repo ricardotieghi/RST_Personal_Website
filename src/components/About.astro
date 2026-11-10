@@ -1,5 +1,5 @@
 ---
-import { Image } from 'astro:assets';
+import Photo from './Photo.astro';
 import Section from './Section.astro';
 import graduation from '../assets/photos/graduation.jpg';
 import { site } from '../data';
@@ -41,12 +41,12 @@ import { site } from '../data';
     </div>
 
     <figure class="about__figure">
-      <Image
+      <Photo
         src={graduation}
         alt="Ricardo Scheufen Tieghi at his UNC-Chapel Hill graduation"
+        caption="UNC-Chapel Hill, May 2025"
         widths={[320, 480, 640]}
         sizes="(max-width: 55rem) 80vw, 20rem"
-        loading="lazy"
         class="about__img"
       />
       <figcaption>UNC-Chapel Hill, May 2025</figcaption>
@@ -119,7 +119,7 @@ import { site } from '../data';
     top: calc(var(--header-h) + var(--space-m));
   }
 
-  .about__img {
+  .about__img :global(img) {
     width: 100%;
     height: auto;
     aspect-ratio: 4 / 5;
