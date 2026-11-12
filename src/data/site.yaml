@@ -9,7 +9,7 @@ pronouns: he/him
 
 # The role line under the name in the hero, footer, and CV, and the employer
 # named in the search-engine data.
-role: Research Engineer
+role: Agentic AI Engineer
 employer: Human Chemical Company
 location: Washington, D.C.
 
@@ -33,7 +33,7 @@ about:
     toxicity from structure, so that questions once answered with animal tests can
     be answered computationally instead.
   - >-
-    I'm a research engineer at Human Chemical Company in Washington, D.C. Before
+    I'm an agentic AI engineer at Human Chemical Company in Washington, D.C. Before
     that I supported the Office of the NIH Director on AI strategy: I co-led the
     $5M AI and Biomedical Foundation Model Challenge, ran portfolio analysis for
     the $1.2B Bio Genesis Mission, and co-authored the NIH AI Strategic Plan for
@@ -57,7 +57,7 @@ education:
 experience:
   - org: Human Chemical Company
     orgDetail: Washington, D.C.
-    title: Research Engineer
+    title: Agentic AI Engineer
     period: Nov 2026 – Present
 
   - org: National Institutes of Health — Office of the NIH Director
